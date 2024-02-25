@@ -5,13 +5,47 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
-        {% endblock %}
-
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+        <link rel="stylesheet" href="{{ asset('styles/app.css') }}"/>
         {% endblock %}
     </head>
+    <header>
+        <nav class="navbar">
+            <h1 ><a class="leftNav" href="{{ path('app_home') }}">CryptoNest</a></h1>
+            <mid class="midNav"><ul class="midMidNav">
+                {% if not app.user %}
+                    <a href="{{ path('app_login') }}">LOGIN</a>
+                {% else %}
+                    <a href="{{ path('app_logout') }}">LOGOUT</a>
+                {% endif %}
+                <a href="{{ path('app_register') }}">SIGN UP</a>
+                <a href="SERVICES">HOST</a>
+                <a href="MENU">MENU</a>
+                <a href="CONTACT">CONTACT</a></ul>
+            </mid>
+            <right class="rightNav"><ul class="rightRightNav">
+                <i class="fa-brands fa-twitter" style="color: #ffffff;"></i>
+                <i class="fa-brands fa-facebook-f" style="color: #ffffff;"></i>
+                <i class="fa-brands fa-instagram" style="color: #ffffff;"></i></ul>
+            </right>    
+        </nav>
+    </header>
     <body>
-        {% block body %}{% endblock %}
+        <main id="container-base">
+            {% if not app.user %}
+                <h1>Welcome</h1>
+            {% endif %}
+            {% block body %}
+            {% endblock %}
+        </main>
+
+        {% block javascripts %}
+            {# {% block importmap %}{{ importmap('app') }}{% endblock %} #}
+        {% endblock %}
     </body>
+    <footer>
+        <div class="footerContainer">
+            <h2 class="footerTitle">CryptoNest</h2>
+        </div>
+    </footer>
 </html>

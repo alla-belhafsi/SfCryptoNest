@@ -1,3 +1,125 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Oswald", sans-serif;
+}
+
 body {
-    background-color: skyblue;
+    background-color: #ffffff;
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+#container-base {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-inline: 5%;
+    min-height: 100vh;
+}
+
+/*================ HEADER ================*/
+
+/*======================== NAVBAR =========================*/
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;/* La navbar occupe la largeur complète de son conteneur parent */
+    position: fixed;/* La navbar est fixée et reste visible lors du défilement */
+    top: 0;/* La navbar est positionnée au sommet de la fenêtre */
+    z-index: 3;/* L'index z définit la pile d'affichage*/
+    background: rgba(0, 0, 0, 0.5);
+}
+
+/*================ LEFT NAVBAR =================*/
+
+.leftNav {
+    text-decoration: none;
+    cursor: pointer;
+    color: #fff;
+    margin: 0px 50px;
+    opacity: 1;
+    transition: 0.47s;
+}
+.leftNav:hover {
+    opacity: 0.4;
+}
+
+/*=============== MIDDLE NAVBAR ================*/
+
+.midNav {
+    list-style: none;
+    padding: 26px 30px;
+    display: flex;
+    flex-direction: row;
+    
+}
+.midNav a {
+    text-decoration: none;
+    cursor: pointer;
+    color: #fff;
+    opacity: 1;
+    transition: 0.47s;
+}
+.midNav a:hover {
+    opacity: 0.4;
+}
+.midMidNav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    gap : 20px;
+}
+
+/*=============== RIGHT NAVBAR ================*/
+
+.rightRightNav {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin: 0px 50px;
+}
+.rightNav i  {
+    cursor: pointer;
+    color: #fff;
+    opacity: 1;
+    transition: 0.47s;
+}
+.rightNav i:hover {
+    opacity: 0.4;
+}
+
+/*============= MAIN ===============*/
+
+.main {
+    display: flex;
+    flex-direction: column;
+}
+
+/*============ FOOTER ==============*/
+
+.footerContainer {
+    display: block;
+    align-content: end;
+    position: relative;
+    background-color: #000;
+    
+}
+.footerTitle {
+    background-color: #000;
+    color: #fff;
+    text-align: center;
+    margin-top: 50px;
 }
