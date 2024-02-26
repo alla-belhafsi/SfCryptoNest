@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        <h3 class="title">Dashboard</h3>
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="user-container">
+                {% if users is not empty %}
+                <table class="user-table">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Firstname</th>
+                            <th class="tac">Lastname</th>
+                            <th class="tac">Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                            {# {% if 'ROLE_ADMIN' not in user.roles %} #}
+                                <tr>
+                                    <td>
+                                        <a class="edit-btn" href="{{ path('edit_user', {'id': user.id}) }}"><span class="material-symbols-outlined">settings</span></a>
+                                        <a class="delete-btn" href="{{ path('delete_user', {'id': user.id}) }}"><span class="material-symbols-outlined">delete</span></a>
+                                    </td>
+                                    <td>
+                                        <p>{{ user.firstname }}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{ user.lastname }}</p>
+                                    </td>
+                                    <td>
+                                        <p>
+                                            {% if 'ROLE_TRAVELLER' in user.roles %}
+                                                Traveller
+                                            {# {% endif %} #}
+                                            {% elseif 'ROLE_HOST' in user.roles %}
+                                                Host
+                                            {% else %}
+                                                {# {{ app.user.roles|join('<br>')|raw }} #}
+                                                {% for role in app.user.roles %}
+                                                    - {{ role }}<br>
+                                                {% endfor %}
+                                            {% endif %}
+                                        </p>
+                                    </td>
+                                </tr>
+                            {# {% endif %} #}
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}  
+                    <p class="center">
+                        No registered user
+                    </p>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}

@@ -6,8 +6,10 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
         {% block stylesheets %}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <link rel="stylesheet" href="{{ asset('styles/app.css') }}"/>
         <link rel="stylesheet" href="{{ asset('styles/home.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('styles/user.css') }}"/>
         <link rel="stylesheet" href="{{ asset('styles/form.css') }}"/>
         {% endblock %}
     </head>
@@ -15,8 +17,14 @@
         <nav class="navbar">
             <h1 ><a class="leftNav" href="{{ path('app_home') }}">CryptoNest</a></h1>
             <mid class="midNav">
-                <ul class="midMidNav">
-                    {# {% if not app.user %}
+                {# <div class="sidebar-search">
+
+                    <div class="input-group custom-search-form">
+                        <input type="text" id="search" class="form-control" placeholder="Search here">
+                    </div>
+                </div> #}
+                {# <ul class="midMidNav">
+                    {% if not app.user %}
                         <a href="{{ path('app_login') }}">LOGIN</a>
                     {% else %}
                         <a href="{{ path('app_logout') }}">LOGOUT</a>
@@ -24,8 +32,8 @@
                     <a href="{{ path('app_register') }}">SIGN UP</a>
                     <a href="SERVICES">HOST</a>
                     <a href="MENU">MENU</a>
-                    <a href="CONTACT">CONTACT</a> #}
-                </ul>
+                    <a href="CONTACT">CONTACT</a>
+                </ul> #}
             </mid>
             <right class="rightNav">
                 <ul class="rightRightNav">
@@ -41,7 +49,6 @@
                             {% else %}
                                 <li><a href="{{ path('app_logout') }}">LOGOUT</a></li>
                             {% endif %}
-                            <li><a href="#">HOST</a></li>
                             <li><a href="#">SERVICES</a></li>
                             <li><a href="#">CONTACT</a></li>
                         </ul>
@@ -54,9 +61,9 @@
                                 <i class="fa-regular fa-user"></i>
                             </label>
                             <ul class="dropdown-menu">
-                                <li><a href="">MY PROFILE</a></li>
+                                <li><a href="{{ path('app_user') }}">MY PROFILE</a></li>
                                 <li><a href="">MY RESERVATIONS</a></li>
-                                <li><a href="">MY PROPERTIES</a></li>
+                                <li><a href="{{ path('app_property') }}">MY PROPERTIES</a></li>
                                 <li><a href="{{ path('new_property') }}">HOST</a></li>
                                 <li><a href="{{ path('app_logout') }}">LOGOUT</a></li>
                             </ul>

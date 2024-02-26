@@ -17,13 +17,13 @@
                 {% if app.user.isVerified == 1 %}
                     Verified
                 {% else %}
-                    Non-Verified
+                    Not Verified
                 {% endif %}
             </p>
         </div>
     </div>   
     {% endif %} #}
-    <div id="home-container">
+    <div class="home-container">
         {% for property in properties %}
             <div class="property-card">
                 <div class="property-card-header">

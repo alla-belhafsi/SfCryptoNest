@@ -26,6 +26,11 @@ body {
 
 /*================ HEADER ================*/
 
+.title {
+    font-size: 24px;
+    margin-block: 20px;
+}
+
 /*======================== NAVBAR =========================*/
 
 .navbar {
@@ -157,6 +162,10 @@ body {
 .main {
     display: flex;
     flex-direction: column;
+}
+
+.tac {
+    text-align: center;
 }
 
 /*============ FOOTER ==============*/

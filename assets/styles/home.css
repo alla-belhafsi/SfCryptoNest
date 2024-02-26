@@ -1,4 +1,14 @@
-#home-container {
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Oswald", sans-serif;
+}
+
+.home-container {
     display: flex;
     flex-wrap: wrap; /*Adapte l'affichage pour tout type d'appareil*/
     justify-content: center;
@@ -44,12 +54,6 @@
     transform: scale(1.1); 
     /* filter: grayscale(0); */
     /* transform: translateY(5px); */
-}
-
-
-.property-card:hover .property-heart {
-    left: -12px;
-    opacity: 1;
 }
 
 .property-card:hover .card-header img {
@@ -109,4 +113,38 @@
 
 .property-heart a {
     color: #fff;
+}
+
+.property-card:hover .property-heart {
+    left: -12px;
+    opacity: 1;
+}
+
+.property-UD {
+    display: flex;
+    justify-content: end;
+    align-items: end;
+    position: absolute;
+    color: #fff;
+    background-color: rgba(160, 195, 255, 0.7);
+    padding-right: 7px;
+    border-bottom-right-radius: 7px;
+    font-size: 24px;
+    height: 50px;
+    width: 74px;
+    top: -16px;
+    left:-50px;
+    transition: 0.50s;
+    opacity: 0;
+}
+
+.property-UD a {
+    color: #fff;
+    margin-inline: 3px;
+}
+
+.property-card:hover .property-UD {
+    left: 0;
+    opacity: 1;
+    color: #000;
 }

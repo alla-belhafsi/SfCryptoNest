@@ -1,20 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello PropertyController!{% endblock %}
+{% block title %}My properties{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code>D:/laragon/www/alla_belhafsi/FirstSymfony/SfCryptoNest/SfCryptoNest/src/Controller/PropertyController.php</code></li>
-        <li>Your template at <code>D:/laragon/www/alla_belhafsi/FirstSymfony/SfCryptoNest/SfCryptoNest/templates/property/index.html.twig</code></li>
-    </ul>
-</div>
+    <div class="home-container">
+        {% for property in properties %}
+            {% if property.user.id == app.user.id %}
+                <div class="property-card">
+                    <div class="property-card-header">
+                        <img src="{{ property.cover }}" alt="cover">
+                        <div class="property-UD">
+                            <a class="edit-btn" href="{{ path('edit_property', {'id': property.id}) }}"><span class="material-symbols-outlined">settings</span></a>
+                            <a class="delete-btn" href="{{ path('delete_property', {'id': property.id}) }}"><span class="material-symbols-outlined">delete</span></a>
+                        </div>
+                    </div>
+                    <div class="property-card-text">
+                        <h3>{{ property.title }}</h3>
+                        <p>{{ property.content|slice(0, 187) }}...</p>
+                        <strong>{{ property.price }} € per day</strong>
+                    </div>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
 {% endblock %}

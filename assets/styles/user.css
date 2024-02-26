@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Oswald", sans-serif;
+}
+
+.user-container {
+    background-color: #aaaaaa;
+    width: fit-content;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -20px;
+    padding-inline: 25px;
+    padding-block: 5px;
+}
+
+.user-table {
+    border-collapse: collapse;
+}
+
+.user-table td, .user-table th {
+    border: none;
+    padding-inline: 20px; 
+    font-weight: 600;
+}
+
+.material-symbols-outlined {
+    transition: 0.5s;
+}
+.material-symbols-outlined:hover {
+    transform: scale(1.2);
+}
+
+.user-role-checkbox {
+    display: inline-block;
+}
+
+.edit-btn {
+    text-decoration: none;
+    color: #000;
+}
+
+.delete-btn {
+    text-decoration: none;
+    color: #000;
+}
+
+.update-btn {
+    text-align: center;
+    color: #007bff;
+    font-size: 16px;
+    padding-inline: 5px;
+    margin-block: 15px;
+}

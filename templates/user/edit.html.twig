@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modify account{% endblock %}
+
+{% block body %}
+    {% if app.user %}
+        
+        <h1 class="title">Modify {{ user }}</h1>
+
+        <div class="user-container">
+            {{ form_start(formModifyUser, {'attr': {'id': 'formModifyUser'}}) }}
+                <div class="form-row">
+                    <div class="form-col-sm">
+                        {{ form_row(formModifyUser.firstname) }} 
+                    </div>
+                    <div class="form-col-sm">
+                        {{ form_row(formModifyUser.lastname) }} 
+                    </div>
+                </div>
+                <div class="form-col">
+                    {{ form_row(formModifyUser.email, {'attr': {'class': 'form-control'}}) }}
+                </div>
+                <div class="form-row">
+                    <div class="form-col-sm">
+                        {{ form_row(formModifyUser.birthdate) }}
+                    </div>
+                    <div class="form-col-sm">
+                        {{ form_row(formModifyUser.picture) }} 
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col-sm">
+                        {{ form_row(formModifyUser.address) }}
+                    </div>
+                    <div class="form-col-sm">
+                        {{ form_row(formModifyUser.zip) }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col-sm">
+                        {{ form_row(formModifyUser.city) }}
+                    </div>
+                    <div class="form-col-sm">
+                        {{ form_row(formModifyUser.country) }}
+                    </div>
+                </div>
+                <div class="tac">
+                    {% for role in formModifyUser.roles %}
+                        <div class="user-role-checkbox">
+                            {{ form_widget(role) }}
+                            {{ form_label(role) }}
+                        </div>
+                    {% endfor %}
+                </div>
+        
+            
+                <div class="update-btn">
+                    {{ form_row(formModifyUser.update) }}
+                </div>
+            
+                {{ form_errors(formModifyUser) }}
+            {{ form_end(formModifyUser) }}
+        </div>
+
+    {% endif %}
+{% endblock %}

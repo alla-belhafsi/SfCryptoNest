@@ -24,7 +24,7 @@ class PropertyController extends AbstractController
 
     # Définir une nouvelle route pour créer une nouvelle Property
     #[Route('/property/new', name: 'new_property')]
-    # Définir une nouvelle route pour éditer une property
+    # Définir une nouvelle route pour éditer une Property
     #[Route('/property/{id}/edit', name: 'edit_property')]
     public function new_edit(Property $property = null, Request $request, EntityManagerInterface $entityManager): Response
     {
