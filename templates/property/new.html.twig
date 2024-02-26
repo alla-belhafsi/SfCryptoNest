@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Host a Nest{% endblock %}
+
+{% block body %}
+    {% if edit %}
+    <h3 class="title">Modify {{ property.title }}</h3>
+    {% else %}
+    <h3 class="title">Add a Property</h3>
+    {% endif %}
+    
+    {{ form_start(formAddProperty) }}
+        <div class="host-container">
+            <div class="host-container1">
+                <div class="form-row">
+                    <div class="form-col-sm">
+                        {{ form_row(formAddProperty.title) }}
+                    </div>
+                    <div class="form-col-sm">
+                        {{ form_row(formAddProperty.slug) }}   
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col">
+                        {{ form_row(formAddProperty.cover) }}
+                    </div>
+                </div>
+            </div>
+            <div class="host-container1">
+                <div class="form-row">
+                    <div class="form-col">
+                        {{ form_row(formAddProperty.content) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="host-container">
+            <div class="host-container1">
+                <div class="form-row">
+                    <div class="form-col-sm">
+                        {{ form_row(formAddProperty.checkIn) }}
+                    </div>
+                    <div class="form-col-sm">
+                        {{ form_row(formAddProperty.checkOut) }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col-sm">
+                        {{ form_row(formAddProperty.price) }}
+                    </div>
+                    <div class="form-col-sm">
+                        {{ form_row(formAddProperty.nbRoom) }}
+                    </div>
+                </div>
+            </div>
+            <div class="host-container1">
+                <div class="form-row">
+                    <div class="form-col-sm">
+                        {{ form_row(formAddProperty.address) }}
+                    </div>
+                    <div class="form-col-sm">
+                        {{ form_row(formAddProperty.zip) }}
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-col-sm">
+                        {{ form_row(formAddProperty.city) }}
+                    </div>
+                    <div class="form-col-sm">
+                        {{ form_row(formAddProperty.country) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="publish-btn">
+            {{ form_row(formAddProperty.publish) }}
+        </div>
+
+        
+        {{ form_errors(formAddProperty) }}
+    {{ form_end(formAddProperty) }}
+{% endblock %}

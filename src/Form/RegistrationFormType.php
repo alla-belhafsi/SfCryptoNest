@@ -22,11 +22,6 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email', EmailType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
             ->add('firstname', TextType::class, [
                 'attr' => [
                     'class' => 'form-control'
@@ -37,17 +32,16 @@ class RegistrationFormType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('picture', TextType::class, [
+            ->add('email', EmailType::class, [
                 'attr' => [
                     'class' => 'form-control'
                 ]
             ])
-            ->add('birthdate', DateType::class, [
-                'widget' => 'single_text',
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
+            // ->add('picture', TextType::class, [
+            //     'attr' => [
+            //         'class' => 'form-control'
+            //     ]
+            // ])
             ->add('plainPassword', RepeatedType::class, [
                 'mapped' => false,
                 'type' => PasswordType::class,
