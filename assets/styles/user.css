@@ -14,19 +14,51 @@
     border-radius: 10px;
     overflow: hidden;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -20px;
-    padding-inline: 25px;
-    padding-block: 5px;
+}
+
+.user-picture {
+    margin-right: 20px;
+    margin-top: 7px;
+    border-radius: 50%;
+    width: 75px;
+    height: 75px;
+}
+
+.user-info {
+    background-color: #505050;
+    color: #fff;
+    padding: 5px;
+    margin-block: 5px;
+    border-radius: 5px;
+}
+
+.username {
+    text-align: center;
+    margin-right: 20px;
 }
 
 .user-table {
     border-collapse: collapse;
+    padding-block: 5px;
 }
 
 .user-table td, .user-table th {
     border: none;
     padding-inline: 20px; 
+    padding-block: 7px;
     font-weight: 600;
 }
+
+/* Style alternatif pour les lignes impaires et paires */
+.user-table tr:nth-child(odd) {
+    background: linear-gradient(45deg, #3498db, #e74c3c);
+}
+
+.user-table tr:nth-child(even) {
+    /* background: linear-gradient(45deg, #2ecc71, #f39c12); */
+    background: linear-gradient(45deg, #e74c3c, #3498db);
+}
+
 
 .material-symbols-outlined {
     transition: 0.5s;
@@ -37,6 +69,15 @@
 
 .user-role-checkbox {
     display: inline-block;
+}
+
+.user-role-box {
+    display: inline-block;
+    cursor: default;
+    border: 1px solid #000;
+    align-content: center;
+    border-radius: 7px;
+    padding-inline: 5px;
 }
 
 .edit-btn {

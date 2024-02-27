@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block body %}
+    {% if app.user or is_granted('ROLE_ADMIN')  %}
+        {% for user in users %}
+
+            <div class="user-container">
+                <div class="row">
+                    <div>
+                        <img class="user-picture" src="{{ asset(user.picture) }}" alt="User Logo" width="50" height="44">
+                        <h4 class="user-info username">{{ user.username }}</h4>
+                    </div>
+                    
+                    <div>
+                        <div class="user-info">
+                            <p>{{ user }}</p>
+                            <p>{{ user.email }}</p>
+                            <p>{{ user.birthdate|date('d.m.Y') }}</p>
+                        </div>
+                        <p class="user-info">
+                            Number of properties: {{ property|length }}
+                        </p>
+                        <div class="user-info">
+                            <p>{{ user.address }}</p>
+                            <p>{{ user.city }}</p>
+                            <p>{{ user.zip }}</p>
+                            <p>{{ user.country }}</p>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            
+        {% endfor %}
+    {% endif %}
+{% endblock %}

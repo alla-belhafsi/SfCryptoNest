@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>CN</text></svg>">
         {% block stylesheets %}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -15,7 +15,14 @@
     </head>
     <header>
         <nav class="navbar">
-            <h1 ><a class="leftNav" href="{{ path('app_home') }}">CryptoNest</a></h1>
+            <left class="leftNav">
+                <h1 ><a class="brand" href="{{ path('app_home') }}">CryptoNest</a></h1>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('app_user') }}">
+                        <i id="fa-users" class="fa-solid fa-users"></i>
+                    </a>
+                {% endif %}
+            </left>
             <mid class="midNav">
                 {# <div class="sidebar-search">
 
@@ -61,7 +68,7 @@
                                 <i class="fa-regular fa-user"></i>
                             </label>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ path('app_user') }}">MY PROFILE</a></li>
+                                <li><a href="{{ path('show_user', {'id': app.user.id}) }}">MY PROFILE</a></li>
                                 <li><a href="">MY RESERVATIONS</a></li>
                                 <li><a href="{{ path('app_property') }}">MY PROPERTIES</a></li>
                                 <li><a href="{{ path('new_property') }}">HOST</a></li>

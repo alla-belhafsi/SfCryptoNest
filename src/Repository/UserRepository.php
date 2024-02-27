@@ -40,6 +40,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    public function paginationQuery()
+    {
+        return $this->createQueryBuilder('u')
+            ->orderBy('u.roles', 'DESC')
+            ->getQuery()
+        ;
+    }
+
     //    /**
     //     * @return User[] Returns an array of User objects
     //     */

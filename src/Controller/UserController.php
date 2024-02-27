@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\UserType;
 use App\Repository\UserRepository;
+use App\Repository\PropertyRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -14,13 +16,23 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
     #[Route('/user', name: 'app_user')]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, PropertyRepository $propertyRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        // Tri des users par date de naissance (DESC)
-        $users = $userRepository->findBy([], ["roles" => "DESC"]);
+        // // Tri des users par date de naissance (DESC)
+        // $users = $userRepository->findBy([], ["roles" => "DESC"]);
+
+        $property = $propertyRepository->findBy([], ["title" => "ASC"]);
+
+        $pagination = $paginator->paginate(
+            $userRepository->paginationQuery(),
+            $request->query->get('page', 1),
+            10
+        );
 
         return $this->render('user/index.html.twig', [
-            'users' => $users,
+            // 'users' => $users,
+            'property' => $property,
+            'pagination' => $pagination
         ]);
     }
 
@@ -73,14 +85,17 @@ class UserController extends AbstractController
         return $this->redirectToRoute('app_user');
     }
 
-    #[Route('/home/{id}', name: 'show_home')]
-    public function show(UserRepository $userRepository): Response
+    #[Route('/user/{id}', name: 'show_user')]
+    public function show(UserRepository $userRepository, PropertyRepository $propertyRepository): Response
     {
         // Tri des users par date de naissance (ASC)
-        $users = $userRepository->findBy([], ["email" => "ASC"]);
+        $users = $userRepository->findBy([], ["username" => "ASC"]);
+
+        $property = $propertyRepository->findBy([], ["title" => "ASC"]);
 
         return $this->render('user/show.html.twig', [
             'users' => $users,
+            'property' => $property
         ]);
     }
 }

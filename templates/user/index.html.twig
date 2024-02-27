@@ -1,24 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}CryptoNest Users List{% endblock %}
 
 {% block body %}
     {% if app.user %}
-        <h3 class="title">Dashboard</h3>
+        <h3 class="title">CryptoNest Users</h3>
         {% if is_granted('ROLE_ADMIN') %}
             <div class="user-container">
-                {% if users is not empty %}
+                {% if pagination is not empty %}
                 <table class="user-table">
                     <thead>
                         <tr>
                             <th></th>
-                            <th>Firstname</th>
-                            <th class="tac">Lastname</th>
+                            <th>Username</th>
+                            <th>Email</th>
                             <th class="tac">Role</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for user in users %}
+                        {% for user in pagination %}
                             {# {% if 'ROLE_ADMIN' not in user.roles %} #}
                                 <tr>
                                     <td>
@@ -26,36 +26,41 @@
                                         <a class="delete-btn" href="{{ path('delete_user', {'id': user.id}) }}"><span class="material-symbols-outlined">delete</span></a>
                                     </td>
                                     <td>
-                                        <p>{{ user.firstname }}</p>
+                                        <a class="link tac" href="{{ path('show_user', {'id': user.id}) }}">{{ user.username }}</a>
                                     </td>
                                     <td>
-                                        <p>{{ user.lastname }}</p>
+                                        <p>{{ user.email }}</p>
                                     </td>
-                                    <td>
-                                        <p>
-                                            {% if 'ROLE_TRAVELLER' in user.roles %}
-                                                Traveller
-                                            {# {% endif %} #}
-                                            {% elseif 'ROLE_HOST' in user.roles %}
-                                                Host
-                                            {% else %}
-                                                {# {{ app.user.roles|join('<br>')|raw }} #}
-                                                {% for role in app.user.roles %}
-                                                    - {{ role }}<br>
-                                                {% endfor %}
-                                            {% endif %}
-                                        </p>
+                                    <td class="tac">
+                                        {# {{ app.user.roles|join('<br>')|raw }} #}
+                                        {% for role in user.roles %}
+                                            <p class="user-role-box" data-role="{{ role|lower|replace({' ': ''}) }}">
+                                                {% if role == 'ROLE_ADMIN' %}
+                                                    Admin
+                                                {% elseif role == 'ROLE_USER' %}
+                                                    Traveller
+                                                {% elseif role == 'ROLE_HOST' %}
+                                                    Host
+                                                {% endif %}
+                                            </p>
+                                        {% endfor %}
                                     </td>
                                 </tr>
                             {# {% endif %} #}
                         {% endfor %}
                     </tbody>
                 </table>
+
                 {% else %}  
                     <p class="center">
                         No registered user
                     </p>
                 {% endif %}
+            </div> 
+            <div class="pagination-container">
+                <ul class="pagination">
+                    {{ knp_pagination_render(pagination) }}
+                </ul>
             </div>
         {% endif %}
     {% endif %}

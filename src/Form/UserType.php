@@ -34,35 +34,38 @@ class UserType extends AbstractType
         // || $this->authorizationChecker->isGranted('ROLE_HOST');
 
         $builder
-            ->add('email', EmailType::class, [
-                'attr' => [
-                    'class' => 'form-control',
-                    'readonly' => $isAdmin,
-                ]
-            ])
-            ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'Administrator' => 'ROLE_ADMIN',
-                    'Traveller' => 'ROLE_USER',
-                    'Host' => 'ROLE_HOST',
-                ],
-                'expanded' => true,
-                'multiple' => true,
-                'disabled' => !$isAdmin,
-            ])
-            // ->add('isVerified')
             ->add('lastname', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'readonly' => $isAdmin,
+                    // 'readonly' => $isAdmin,
                 ]
             ])
             ->add('firstname', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
-                    'readonly' => $isAdmin,
+                    // 'readonly' => $isAdmin,
                 ]
             ])
+            ->add('email', EmailType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    // 'readonly' => $isAdmin,
+                ]
+            ])
+            ->add('username', TextType::class, [
+                'attr' => [
+                    'class' => 'form-control',
+                    // 'readonly' => $isAdmin,
+                ]
+            ])
+            ->add('birthdate', DateType::class, [
+                'widget' => 'single_text',
+                'attr' => [
+                    'class' => 'form-control',
+                    // 'readonly' => $isAdmin,
+                ]
+            ])
+            // ->add('isVerified')
             ->add('picture', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
@@ -75,13 +78,13 @@ class UserType extends AbstractType
                     // 'readonly' => $isAdmin,
                 ]
             ])
-            ->add('city', TextType::class, [
+            ->add('zip', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     // 'readonly' => $isAdmin,
                 ]
             ])
-            ->add('zip', TextType::class, [
+            ->add('city', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     // 'readonly' => $isAdmin,
@@ -93,12 +96,15 @@ class UserType extends AbstractType
                     // 'readonly' => $isAdmin,
                 ]
             ])
-            ->add('birthdate', DateType::class, [
-                'widget' => 'single_text',
-                'attr' => [
-                    'class' => 'form-control',
-                    // 'readonly' => $isAdmin,
-                ]
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'Administrator' => 'ROLE_ADMIN',
+                    'Traveller' => 'ROLE_USER',
+                    'Host' => 'ROLE_HOST',
+                ],
+                'expanded' => true,
+                'multiple' => true,
+                'disabled' => !$isAdmin,
             ])
             ->add('update', SubmitType::class, [
                 'attr' => [
