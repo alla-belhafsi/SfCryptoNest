@@ -18,8 +18,6 @@ class UserController extends AbstractController
     #[Route('/user', name: 'app_user')]
     public function index(UserRepository $userRepository, PropertyRepository $propertyRepository, Request $request, PaginatorInterface $paginator): Response
     {
-        // // Tri des users par date de naissance (DESC)
-        // $users = $userRepository->findBy([], ["roles" => "DESC"]);
 
         $property = $propertyRepository->findBy([], ["title" => "ASC"]);
 
@@ -30,7 +28,6 @@ class UserController extends AbstractController
         );
 
         return $this->render('user/index.html.twig', [
-            // 'users' => $users,
             'property' => $property,
             'pagination' => $pagination
         ]);

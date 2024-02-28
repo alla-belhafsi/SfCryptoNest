@@ -34,7 +34,7 @@ class FakeUsersCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $faker = \Faker\Factory::create();
 
-        for ($i = 0; $i < 1; $i++) {
+        for ($i = 0; $i < 300; $i++) {
             $user = new \App\Entity\User();
             $user->setUsername($faker->word);
             $user->setEmail($faker->email);
@@ -43,8 +43,6 @@ class FakeUsersCommand extends Command
             $plainPassword = $faker->password;
             $hashedPassword = password_hash($plainPassword, PASSWORD_BCRYPT);
             $user->setPassword($hashedPassword);
-
-            // Add more fields as needed
 
             $this->entityManager->persist($user);
         }

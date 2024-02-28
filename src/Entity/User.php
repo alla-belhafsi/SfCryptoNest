@@ -38,6 +38,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $username = null;
+
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $lastname = null;
 
@@ -65,8 +68,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Property::class, mappedBy: 'user')]
     private Collection $properties;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $username = null;
 
     public function __construct()
     {
@@ -156,6 +157,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(?string $username): static
+    {
+        $this->username = $username;
 
         return $this;
     }
@@ -289,17 +302,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __toString(): string
     {
         return $this->firstname." ".$this->lastname;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(?string $username): static
-    {
-        $this->username = $username;
-
-        return $this;
     }
 }
