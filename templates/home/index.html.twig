@@ -4,41 +4,45 @@
 
 {% block body %}
     <div class="home-container">
-        {% for property in properties %}
-            <div class="property-card">
+        {% if properties is empty %}
+            <h3>No results for the city search "{{ city }}"</h3>    
+        {% else %}
+            {% for property in properties %}
+                <div class="property-card">
 
-                <div class="property-card-header">
-                    <a href="{{ path('show_property', {'id': property.id} ) }}">
-                        <img src="{{ asset(property.cover) }}" alt="cover"> 
-                    </a>
-                    <div class="property-heart">
-                        <a href=""><i class="fa-regular fa-heart"></i></a>
+                    <div class="property-card-header">
+                        <a href="{{ path('show_property', {'id': property.id} ) }}">
+                            <img src="{{ asset(property.cover) }}" alt="cover"> 
+                        </a>
+                        <div class="property-heart">
+                            <a href=""><i class="fa-regular fa-heart"></i></a>
+                        </div>
                     </div>
+
+                    <div class="property-card-box">
+                        <strong class="property-card-localisation">{{ property.city }}, {{ property.country }}</strong>
+                        {% if property.user.username is not empty %}
+                            <a class="property-card-host" href="">{{ property.user.username }}</a>
+                        {% else %}
+                            <a class="property-card-host" href="">{{ property.user.email|split('@')|first }}</a>            
+                        {% endif %}
+                    </div>
+
+                    <div class="property-card-text">
+                        <h3>{{ property.title }}</h3>
+
+                        {# 
+                           - SPLIT le contenu de "property.content" en une liste de mots en utilisant l'espace comme délimiteur, 
+                           - SLICE sélectionne les 17 premiers mots du contenu 
+                           - JOIN rejoint les 17 mots sélectionnés en les séparant par des espaces. 
+                        #}
+                        <p>{{ property.content|split(" ")|slice(0, 15)|join(" ") }}...</p>
+
+                        <strong>{{ property.price }} € per day</strong>
+                    </div>
+
                 </div>
-
-                <div class="property-card-box">
-                    <strong class="property-card-localisation">{{ property.city }}, {{ property.country }}</strong>
-                    {% if property.user.username is not empty %}
-                        <a class="property-card-host" href="">{{ property.user.username }}</a>
-                    {% else %}
-                        <a class="property-card-host" href="">{{ property.user.email|split('@')|first }}</a>            
-                    {% endif %}
-                </div>
-
-                <div class="property-card-text">
-                    <h3>{{ property.title }}</h3>
-
-                    {# 
-                       - SPLIT le contenu de "property.content" en une liste de mots en utilisant l'espace comme délimiteur, 
-                       - SLICE sélectionne les 17 premiers mots du contenu 
-                       - JOIN rejoint les 17 mots sélectionnés en les séparant par des espaces. 
-                    #}
-                    <p>{{ property.content|split(" ")|slice(0, 15)|join(" ") }}...</p>
-
-                    <strong>{{ property.price }} € per day</strong>
-                </div>
-
-            </div>
-        {% endfor %}
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

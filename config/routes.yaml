@@ -7,4 +7,4 @@ controllers:
 # config/routes.yaml
 search_by_city:
     path: '/search'
-    controller: 'App\Controller\PropertyController::searchByCity'
+    controller: 'App\Controller\HomeController::searchByCity'
