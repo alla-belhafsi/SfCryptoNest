@@ -49,15 +49,16 @@
                         {{ form_row(formModifyUser.country) }}
                     </div>
                 </div>
-                <div class="tac">
-                    {% for role in formModifyUser.roles %}
-                        <div class="user-role-checkbox">
-                            {{ form_widget(role) }}
-                            {{ form_label(role) }}
-                        </div>
-                    {% endfor %}
-                </div>
-        
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="tac">
+                        {% for role in formModifyUser.roles %}
+                            <div class="user-role-checkbox">
+                                {{ form_widget(role) }}
+                                {{ form_label(role) }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
             
                 <div class="update-btn">
                     {{ form_row(formModifyUser.update) }}

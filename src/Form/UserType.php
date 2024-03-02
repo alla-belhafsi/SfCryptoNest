@@ -32,7 +32,19 @@ class UserType extends AbstractType
         // 2ème Méthode : Vérifie si l'utilisateur a le rôle de traveller ou host
         // $isUser = $this->authorizationChecker->isGranted('ROLE_USER')
         // || $this->authorizationChecker->isGranted('ROLE_HOST');
-
+        if ($isAdmin) {
+            $builder->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'Administrator' => 'ROLE_ADMIN',
+                    'Traveller' => 'ROLE_USER',
+                    'Host' => 'ROLE_HOST',
+                ],
+                'expanded' => true,
+                'multiple' => true,
+                'disabled' => !$isAdmin,
+            ]);
+        }
+        
         $builder
             ->add('lastname', TextType::class, [
                 'attr' => [
@@ -63,6 +75,7 @@ class UserType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     // 'readonly' => $isAdmin,
+                    'required' => false,
                 ]
             ])
             // ->add('isVerified')
@@ -76,36 +89,40 @@ class UserType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     // 'readonly' => $isAdmin,
+                    'required' => false,
                 ]
             ])
             ->add('zip', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     // 'readonly' => $isAdmin,
+                    'required' => false,
                 ]
             ])
             ->add('city', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     // 'readonly' => $isAdmin,
+                    'required' => false,
                 ]
             ])
             ->add('country', TextType::class, [
                 'attr' => [
                     'class' => 'form-control',
                     // 'readonly' => $isAdmin,
+                    'required' => false,
                 ]
             ])
-            ->add('roles', ChoiceType::class, [
-                'choices' => [
-                    'Administrator' => 'ROLE_ADMIN',
-                    'Traveller' => 'ROLE_USER',
-                    'Host' => 'ROLE_HOST',
-                ],
-                'expanded' => true,
-                'multiple' => true,
-                'disabled' => !$isAdmin,
-            ])
+            // ->add('roles', ChoiceType::class, [
+            //     'choices' => [
+            //         'Administrator' => 'ROLE_ADMIN',
+            //         'Traveller' => 'ROLE_USER',
+            //         'Host' => 'ROLE_HOST',
+            //     ],
+            //     'expanded' => true,
+            //     'multiple' => true,
+            //     'disabled' => !$isAdmin,
+            // ])
             ->add('update', SubmitType::class, [
                 'attr' => [
                     'class' => 'btn btn-success'

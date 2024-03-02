@@ -22,25 +22,6 @@ class PropertyController extends AbstractController
         ]);
     }
 
-    public function searchByCity(EntityManagerInterface $entityManager, Request $request): Response
-    {
-        $city = $request->query->get('city');
-
-        // Convertir la ville en minuscules pour rendre la recherche insensible à la casse
-        $city = strtolower($city);
-
-        $properties = $entityManager->getRepository(Property::class)
-            ->createQueryBuilder('p')
-            ->where('LOWER(p.city) = :city')
-            ->setParameter('city', $city)
-            ->getQuery()
-            ->getResult();
-
-        return $this->render('property/index.html.twig', [
-            'properties' => $properties,
-        ]);
-    }
-
     # Définir une nouvelle route pour créer une nouvelle Property
     #[Route('/property/new', name: 'new_property')]
     # Définir une nouvelle route pour éditer une Property
