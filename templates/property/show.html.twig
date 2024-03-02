@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ property.title }}{% endblock %}
+
+{% block body %}
+    <div class="home-container">
+        <div class="property-cover-card">
+            <img src="{{ asset(property.cover) }}" alt="property.cover">
+        </div>
+        <div class="property-info-side">
+            <div class="property-card-box">
+                <strong class="property-card-localisation">{{ property.city }}, {{ property.country }}</strong>
+                {% if property.user.username is not empty %}
+                        <a class="property-card-host" href="">{{ property.user.username }}</a>
+                    {% else %}
+                        <a class="property-card-host" href="">{{ property.user.email|split('@')|first }}</a>            
+                    {% endif %}
+            </div>
+            <div class="property-content-card">
+                <div class="property-card-text">
+                    <h3>{{ property.title }}</h3>
+                    <p>{{ property.content }}</p>
+                </div>
+            </div>
+            <div class="property-price-book">
+                <strong>{{ property.price }} € per day</strong>
+                <button class="book-btn" type="">Book now</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
