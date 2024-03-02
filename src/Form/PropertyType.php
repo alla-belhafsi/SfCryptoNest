@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class PropertyType extends AbstractType
@@ -24,11 +25,11 @@ class PropertyType extends AbstractType
                     'class' => 'form-control'
                 ]
             ])
-            ->add('slug', TextType::class, [
-                'attr' => [
-                    'class' => 'form-control'
-                ]
-            ])
+            // ->add('slug', TextType::class, [
+            //     'attr' => [
+            //         'class' => 'form-control'
+            //     ]
+            // ])
             ->add('price', NumberType::class, [
                 'attr' => [
                     'class' => 'form-control'
@@ -38,6 +39,12 @@ class PropertyType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'style' => 'height: 122px; resize: none;',
+                ]
+            ])
+            ->add('createdAt', DateTimeType::class, [
+                'label' => false,
+                'attr' => [
+                    'style' => 'display: none;'
                 ]
             ])
             ->add('cover', TextType::class, [
@@ -97,11 +104,20 @@ class PropertyType extends AbstractType
             ])
         ;
     }
-
+    
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Property::class,
+            // Définir l'option "user"
+            'user' => null, 
         ]);
     }
+    
+    // public function configureOptions(OptionsResolver $resolver): void
+    // {
+    //     $resolver->setDefaults([
+    //         'data_class' => Property::class,
+    //     ]);
+    // }
 }

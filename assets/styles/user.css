@@ -1,5 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Quicksand:wght@300..700&display=swap');
 
 * {
     margin: 0;
@@ -8,17 +7,19 @@
     font-family: "Oswald", sans-serif;
 }
 
-.user-container {
-    background-color: #aaaaaa;
-    width: fit-content;
-    border-radius: 10px;
-    overflow: hidden;
+.user-card {
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -20px;
+    background-color: #aaaaaa;
+    border-radius: 10px;
+    width: fit-content;
+    overflow: hidden;
+    cursor: default;
 }
 
 .user-picture {
-    margin-right: 20px;
-    margin-top: 7px;
+    margin: 7px 20px 0px 5px;
+    /* margin-right: 20px;
+    margin-top: 7px; */
     border-radius: 50%;
     width: 75px;
     height: 75px;
@@ -29,12 +30,38 @@
     color: #fff;
     padding: 5px;
     margin-block: 5px;
+    margin-right: 5px;
     border-radius: 5px;
+}
+
+.user-info-box {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 5px;
+}
+
+.user-info-item {
+    display: inline-block;
+    text-align: center;
+    /* text-decoration: none;
+    color: #fff; */
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 5px 15px;
+    width: 174px;
+}
+
+.completeName {
+    display: flex;
+    margin: 5px 10px;
+    gap: 10px;
 }
 
 .username {
     text-align: center;
     margin-right: 20px;
+    margin-left: 5px;
 }
 
 .user-table {
@@ -53,12 +80,13 @@
 .user-table tr:nth-child(odd) {
     background: linear-gradient(45deg, #3498db, #e74c3c);
 }
-
 .user-table tr:nth-child(even) {
-    /* background: linear-gradient(45deg, #2ecc71, #f39c12); */
     background: linear-gradient(45deg, #e74c3c, #3498db);
 }
 
+.UD-btn {
+    margin-left: 17px;
+}
 
 .material-symbols-outlined {
     transition: 0.5s;

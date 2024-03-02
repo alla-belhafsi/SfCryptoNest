@@ -19,34 +19,32 @@
                     </thead>
                     <tbody>
                         {% for user in pagination %}
-                            {# {% if 'ROLE_ADMIN' not in user.roles %} #}
-                                <tr>
-                                    <td>
-                                        <a class="edit-btn" href="{{ path('edit_user', {'id': user.id}) }}"><span class="material-symbols-outlined">settings</span></a>
-                                        <a class="delete-btn" href="{{ path('delete_user', {'id': user.id}) }}"><span class="material-symbols-outlined">delete</span></a>
-                                    </td>
-                                    <td>
-                                        <a class="link tac" href="{{ path('show_user', {'id': user.id}) }}">{{ user.username }}</a>
-                                    </td>
-                                    <td>
-                                        <p>{{ user.email }}</p>
-                                    </td>
-                                    <td class="tac">
-                                        {# {{ app.user.roles|join('<br>')|raw }} #}
-                                        {% for role in user.roles %}
-                                            <p class="user-role-box" data-role="{{ role|lower|replace({' ': ''}) }}">
-                                                {% if role == 'ROLE_ADMIN' %}
-                                                    Admin
-                                                {% elseif role == 'ROLE_USER' %}
-                                                    Traveller
-                                                {% elseif role == 'ROLE_HOST' %}
-                                                    Host
-                                                {% endif %}
-                                            </p>
-                                        {% endfor %}
-                                    </td>
-                                </tr>
-                            {# {% endif %} #}
+                            <tr>
+                                <td>
+                                    <a class="edit-btn" href="{{ path('edit_user', {'id': user.id}) }}"><span class="material-symbols-outlined">settings</span></a>
+                                    <a class="delete-btn" href="{{ path('delete_user', {'id': user.id}) }}"><span class="material-symbols-outlined">delete</span></a>
+                                </td>
+                                <td>
+                                    <a class="link tac" href="{{ path('show_user', {'id': user.id}) }}">{{ user.username }}</a>
+                                </td>
+                                <td>
+                                    <p>{{ user.email }}</p>
+                                </td>
+                                <td class="tac">
+                                    {# {{ app.user.roles|join('<br>')|raw }} #}
+                                    {% for role in user.roles %}
+                                        <p class="user-role-box" data-role="{{ role|lower|replace({' ': ''}) }}">
+                                            {% if role == 'ROLE_ADMIN' %}
+                                                Admin
+                                            {% elseif role == 'ROLE_USER' %}
+                                                Traveller
+                                            {% elseif role == 'ROLE_HOST' %}
+                                                Host
+                                            {% endif %}
+                                        </p>
+                                    {% endfor %}
+                                </td>
+                            </tr>
                         {% endfor %}
                     </tbody>
                 </table>

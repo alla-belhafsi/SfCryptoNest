@@ -22,6 +22,25 @@ class PropertyController extends AbstractController
         ]);
     }
 
+    public function searchByCity(EntityManagerInterface $entityManager, Request $request): Response
+    {
+        $city = $request->query->get('city');
+
+        // Convertir la ville en minuscules pour rendre la recherche insensible à la casse
+        $city = strtolower($city);
+
+        $properties = $entityManager->getRepository(Property::class)
+            ->createQueryBuilder('p')
+            ->where('LOWER(p.city) = :city')
+            ->setParameter('city', $city)
+            ->getQuery()
+            ->getResult();
+
+        return $this->render('property/index.html.twig', [
+            'properties' => $properties,
+        ]);
+    }
+
     # Définir une nouvelle route pour créer une nouvelle Property
     #[Route('/property/new', name: 'new_property')]
     # Définir une nouvelle route pour éditer une Property
@@ -29,13 +48,26 @@ class PropertyController extends AbstractController
     public function new_edit(Property $property = null, Request $request, EntityManagerInterface $entityManager): Response
     {
         // Si la property n'existe pas, créer une nouvelle instance de l'entité property 
-        if(!$property) 
-        {
+        if (!$property) {
             $property = new Property();
-        }
         
-        // Créer un formulaire basé sur le type de formulaire PropertyType et l'entité Property
-        $form = $this->createForm(PropertyType::class, $property);
+            // Récupérer l'utilisateur connecté
+            $user = $this->getUser();
+
+            // Prédéfinir property.user.id en tant que app.user.id
+            $property->setUser($user);
+
+            // Prédéfinir property.createdAt avec la date d'aujourd'hui
+            $property->setCreatedAt(new \DateTimeImmutable());
+        
+            // Créer un formulaire basé sur le type de formulaire PropertyType et l'entité Property
+            $form = $this->createForm(PropertyType::class, $property, [
+                'user' => $user,
+            ]);
+        } else {
+            // Si la propriété existe, assurez-vous que le formulaire est créé correctement
+            $form = $this->createForm(PropertyType::class, $property);
+        }
 
         // Traiter la requête HTTP pour remplir le formulaire
         $form->handleRequest($request);
@@ -77,9 +109,22 @@ class PropertyController extends AbstractController
         return $this->redirectToRoute('app_property');
     }
 
-    #[Route('/property/{id}', name: 'show_module')]
+    # Définir une nouvelle route pour voir une property
+    #[Route('/property/{id}', name: 'show_property')]
     public function show (Property $property): Response
     {
+        // Nettoyer le slug à l'aide de la fonction slugify de Symfony
+        // $cleanedSlug = $slugger->slug($slug)->toString();
+    
+        // Vérifiez si le slug dans l'URL correspond au slug de la propriété
+        // if ($property->getSlug() !== $cleanedSlug) {
+        //     // Redirigez l'utilisateur vers l'URL canonique avec le slug correct
+        //     return $this->redirectToRoute('show_property', [
+        //         'id' => $property->getId(),
+        //         'slug' => $cleanedSlug,
+        //     ], 301);
+        // }
+    
         return $this->render('property/show.html.twig', [
             'property' => $property,
         ]);

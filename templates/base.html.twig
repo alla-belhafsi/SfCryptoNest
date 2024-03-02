@@ -9,6 +9,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
         <link rel="stylesheet" href="{{ asset('styles/app.css') }}"/>
         <link rel="stylesheet" href="{{ asset('styles/home.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('styles/property.css') }}"/>
         <link rel="stylesheet" href="{{ asset('styles/user.css') }}"/>
         <link rel="stylesheet" href="{{ asset('styles/form.css') }}"/>
         {% endblock %}
@@ -41,6 +42,11 @@
                     <a href="MENU">MENU</a>
                     <a href="CONTACT">CONTACT</a>
                 </ul> #}
+                <form action="{{ path('search_by_city') }}" method="get">
+                    <label for="city"></label>
+                    <input type="text" id="city" name="city" class="search-form-control" value="{{ app.request.query.get('city') }}" placeholder="WHERE ?"/>
+                    <button class="search-btn" type="submit">Search</button>
+                </form>
             </mid>
             <right class="rightNav">
                 <ul class="rightRightNav">
@@ -70,7 +76,10 @@
                             <ul class="dropdown-menu">
                                 <li><a href="{{ path('show_user', {'id': app.user.id}) }}">MY PROFILE</a></li>
                                 <li><a href="">MY RESERVATIONS</a></li>
-                                <li><a href="{{ path('app_property') }}">MY PROPERTIES</a></li>
+                                {# <li><a href="{{ path('app_property') }}">MY PROPERTIES</a></li> #}
+                                {% if app.user.properties is not empty %}
+                                    <li><a href="{{ path('app_property') }}">MY PROPERTIES</a></li>
+                                {% endif %}
                                 <li><a href="{{ path('new_property') }}">HOST</a></li>
                                 <li><a href="{{ path('app_logout') }}">LOGOUT</a></li>
                             </ul>

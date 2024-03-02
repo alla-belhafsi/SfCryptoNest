@@ -4,35 +4,166 @@
 
 {% block body %}
     {% if app.user or is_granted('ROLE_ADMIN')  %}
-        {% for user in users %}
-
-            <div class="user-container">
-                <div class="row">
-                    <div>
-                        <img class="user-picture" src="{{ asset(user.picture) }}" alt="User Logo" width="50" height="44">
-                        <h4 class="user-info username">{{ user.username }}</h4>
-                    </div>
-                    
-                    <div>
-                        <div class="user-info">
-                            <p>{{ user }}</p>
-                            <p>{{ user.email }}</p>
-                            <p>{{ user.birthdate|date('d.m.Y') }}</p>
+        <div class="user-card">
+            <div class="row">
+                <div>
+                    {# <img class="user-picture" src="{{ asset(app.user.picture) }}" alt="User Logo" width="50" height="44"> #}
+                    {% if app.user.picture is not empty %}
+                        <img class="user-picture" src="{{ asset(app.user.picture) }}" alt="User Logo" width="50" height="44">
+                    {% else %}
+                        <div class="form-row">
+                            <div class="form-col-sm">
+                                {{ form_row(formModifyUser.app.user.picture) }} 
+                            </div>
                         </div>
-                        <p class="user-info">
-                            Number of properties: {{ property|length }}
-                        </p>
-                        <div class="user-info">
-                            <p>{{ user.address }}</p>
-                            <p>{{ user.city }}</p>
-                            <p>{{ user.zip }}</p>
-                            <p>{{ user.country }}</p>
-                        </div>
+                    {% endif %}
+                    {# <h4 class="user-info username">{{ app.user.username }}</h4> #}
+                    {% if app.user.username is not empty %}
+                        <h4 class="user-info username">{{ app.user.username }}</h4>
+                    {% endif %}
+                    <div class="UD-btn">
+                        <a class="edit-btn" href="{{ path('edit_user', {'id': app.user.id}) }}"><span class="material-symbols-outlined">settings</span></a>
+                        <a class="delete-btn" href="{{ path('delete_user', {'id': app.user.id}) }}"><span class="material-symbols-outlined">delete</span></a>
                     </div>
                 </div>
                 
+                <div>
+                    <div class="tac">
+                        <strong>My Informations</strong>
+                    </div>
+                    <div class="user-info">
+
+                        <div class="completeName">
+                            <div class="user-info-box">
+                                <strong>Email</strong>
+                                <p class="user-info-item">{{ app.user.email }}</p>
+                            </div>
+                            <div class="user-info-box">
+                                <strong>Username</strong>
+                                {% if app.user.username is not empty %}
+                                    <p class="user-info-item">{{ app.user.username }}</p>
+                                {% else %}
+                                    <a class="user-info-item" href="{{ path('edit_user', {'id': app.user.id}) }}">Add a Username</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        
+                        <div class="completeName">
+                            <div class="user-info-box">
+                                <strong>Birthdate</strong>
+                                {% if app.user.birthdate is not empty %}
+                                    <p class="user-info-item">{{ app.user.birthdate|date('d.m.Y') }} ({{ app.user.getAgeToday() }} years)</p>
+                                {% else %}
+                                    <a class="user-info-item" href="{{ path('edit_user', {'id': app.user.id}) }}">Add your Birtdate</a>
+                                {% endif %}
+                            </div>
+                            <div class="user-info-box">
+                                <strong>Member since</strong>
+                                <p class="user-info-item">{{ app.user.createdAt|date('M Y') }}</p> 
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="tac">
+                        <strong>My properties</strong>
+                    </div>
+                    <div class="user-info tac">
+                        {% if app.user.properties is not empty %}
+                            <p class="user-info-item">Number of properties: {{ app.user.properties|length }}</p>
+                        {% else %}
+                            <a class="user-info-item" href="{{ path('new_property') }}">Host a property</a>
+                        {% endif %}
+                        </div>
+                    <div class="tac">
+                        <strong>Billing Informations</strong>
+                    </div>
+                    <div class="user-info">
+                        <div class="completeName">
+                            <div class="user-info-box">
+                                <strong>Firstname</strong>
+                                {% if app.user.firstname is not empty %}
+                                    <p class="user-info-item">{{ app.user.firstname }}</p>
+                                {% else %}
+                                    <a class="user-info-item" href="{{ path('edit_user', {'id': app.user.id}) }}">Add your Firstname</a>
+                                {% endif %}
+                            </div>
+                            <div class="user-info-box">
+                                <strong>Lastname</strong>
+                                {% if app.user.lastname is not empty %}
+                                    <p class="user-info-item">{{ app.user.lastname }}</p>
+                                {% else %}
+                                    <a class="user-info-item" href="{{ path('edit_user', {'id': app.user.id}) }}">Add your Lastname</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="completeName">
+                            <div class="user-info-box">
+                                <strong>Address</strong>
+                                {% if app.user.address is not empty %}
+                                    <p class="user-info-item">{{ app.user.address }}</p>
+                                {% else %}
+                                    <a class="user-info-item" href="{{ path('edit_user', {'id': app.user.id}) }}">Add your Address</a>
+                                {% endif %}
+                            </div>
+                            <div class="user-info-box">
+                                <strong>City</strong>
+                                {% if app.user.city is not empty %}
+                                    <p class="user-info-item">{{ app.user.city }}</p>
+                                {% else %}
+                                    <a class="user-info-item" href="{{ path('edit_user', {'id': app.user.id}) }}">Add your City</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="completeName">
+                            <div class="user-info-box">
+                                <strong>ZIP</strong>
+                                {% if app.user.zip is not empty %}
+                                    <p class="user-info-item">{{ app.user.zip }}</p>
+                                {% else %}
+                                    <a class="user-info-item" href="{{ path('edit_user', {'id': app.user.id}) }}">Add your ZIP</a>
+                                {% endif %}
+                            </div>
+                            <div class="user-info-box">
+                                <strong>Country</strong>
+                                {% if app.user.country is not empty %}
+                                    <p class="user-info-item">{{ app.user.country }}</p>
+                                {% else %}
+                                    <a class="user-info-item" href="{{ path('edit_user', {'id': app.user.id}) }}">Add your Country</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            
-        {% endfor %}
+        </div>
     {% endif %}
 {% endblock %}
+
+
+
+{# <div class="user-container">
+    <div class="row">
+        <div>
+            <img class="user-picture" src="{{ asset(user.picture) }}" alt="User Logo" width="50" height="44">
+            <h4 class="user-info username">{{ user.username }}</h4>
+        </div>
+        
+        <div>
+            <div class="user-info">
+                <p>{{ user }}</p>
+                <p>{{ user.email }}</p>
+                <p>{{ user.birthdate|date('d.m.Y') }}</p>
+            </div>
+            <p class="user-info">
+                Number of properties: {{ property|length }}
+            </p>
+            <div class="user-info">
+                <p>{{ user.address }}</p>
+                <p>{{ user.city }}</p>
+                <p>{{ user.zip }}</p>
+                <p>{{ user.country }}</p>
+            </div>
+        </div>
+    </div>
+</div> #}

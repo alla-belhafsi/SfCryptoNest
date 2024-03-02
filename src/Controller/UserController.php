@@ -18,7 +18,6 @@ class UserController extends AbstractController
     #[Route('/user', name: 'app_user')]
     public function index(UserRepository $userRepository, PropertyRepository $propertyRepository, Request $request, PaginatorInterface $paginator): Response
     {
-
         $property = $propertyRepository->findBy([], ["title" => "ASC"]);
 
         $pagination = $paginator->paginate(
@@ -55,7 +54,7 @@ class UserController extends AbstractController
             $entityManager->flush();
 
             // Rediriger vers la liste des users après la modification réussi
-            return $this->redirectToRoute('app_user', [
+            return $this->redirectToRoute('show_user', [
                 'id' => $user->getId()
             ]);
         }
@@ -85,14 +84,15 @@ class UserController extends AbstractController
     #[Route('/user/{id}', name: 'show_user')]
     public function show(UserRepository $userRepository, PropertyRepository $propertyRepository): Response
     {
-        // Tri des users par date de naissance (ASC)
-        $users = $userRepository->findBy([], ["username" => "ASC"]);
+        // Récupérer l'utilisateur actuellement connecté
+        $user = $this->getUser();
 
-        $property = $propertyRepository->findBy([], ["title" => "ASC"]);
+        // Tri des properties par pays (ASC)
+        $properties = $propertyRepository->findBy(['user' => $user], ["country" => "ASC"]);
 
         return $this->render('user/show.html.twig', [
-            'users' => $users,
-            'property' => $property
+            'user' => $user,
+            'properties' => $properties,
         ]);
     }
 }

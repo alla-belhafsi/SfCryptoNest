@@ -66,14 +66,58 @@ body {
 
 /*=============== MIDDLE NAVBAR ================*/
 
-.midNav {
-    list-style: none;
-    padding: 26px 30px;
-    display: flex;
-    flex-direction: row;
-    
+/* .midNav {
+    display: block;
+    margin-top: 10px;
+} */
+
+.search-form-control {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-weight: 500;
+    padding-inline: 3px;
+    margin: 0px 10px 0px -30px;
 }
-.midNav a {
+
+
+.search-btn {
+    display: inline-block;
+    background-color: #fff;
+    border-color: #000;
+    color: #AD8D29;
+    font-weight: 500;
+    font-size: 14px;
+    border: 1px solid transparent;
+    border-radius: 5px;
+    padding: 0px 5px 0px 5px;
+    margin-block: 14px;
+    transition: background-color 0.25s ease-in-out, border-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, transform 0.25s ease-in-out;
+}
+
+.search-btn:hover {
+    background-color: #4C4C4C;
+    border-color: #fff;
+    box-shadow: 0 2px 5px rgba(38, 57, 77, 0.5);
+    transform: scale(1.1);
+}
+/* .search-form-control {
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 10px;
+    padding: 8px;
+    width: 100%;
+}
+
+.search-form-control:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+} */
+/* .midNav a {
     text-decoration: none;
     cursor: pointer;
     color: #fff;
@@ -90,7 +134,7 @@ body {
     align-items: center;
     width: 100%;
     gap : 20px;
-}
+} */
 
 /*=============== RIGHT NAVBAR ================*/
 
