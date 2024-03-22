@@ -117,7 +117,7 @@
             <div class="feedback-container tac">
                 {% for feedback in booking.property.feedback %}
                     <div class="feedback-card">
-                        <div class="star-rating">
+                        <div class="star-rating tac">
                             {% for i in 1..5 %}
                                 {% if i <= feedback.rating %}
                                     <span class="star rated">&#9733;</span>

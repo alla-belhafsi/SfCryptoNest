@@ -197,7 +197,9 @@
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -20px;
     background-color: #aaaaaa;
     border-radius: 10px;
-    width: 250px;
+    width: 275px;
+    padding: 5px;
+    text-align: justify;
     overflow: hidden;
     cursor: default;
 }
