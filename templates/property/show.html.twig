@@ -3,7 +3,12 @@
 {% block title %}{{ property.title }}{% endblock %}
 
 {% block body %}
-    <div class="home-container">
+    <div class="first-part-property">
+        <h2>{{ property.title }}</h2>
+        <h3>Discover the charm of {{ property.city }}, nestled in {{ property.country }}! Book your stay now and embark on an unforgettable experience !</h3>
+    </div>
+
+    <div class="second-part-property">
         <div class="property-cover-card">
             <img src="{{ asset(property.cover) }}" alt="property.cover">
         </div>
@@ -17,14 +22,25 @@
                     {% endif %}
             </div>
             <div class="property-content-card">
-                <div class="property-card-text">
-                    <h3>{{ property.title }}</h3>
-                    <p>{{ property.content }}</p>
-                </div>
+                <p>{{ property.content }}</p>
             </div>
             <div class="property-price-book">
                 <strong>{{ property.price }} € per day</strong>
                 <a class="book-btn" href="{{ path('new_booking', {'propertyId': property.id}) }}">Book now</a>
+            </div>
+        </div>
+        <div class="property-icons">
+            <div class="property-param">
+                <img class="property-icon" src="{{ asset('img/check-in.png') }}" alt="check-in">
+                <p>{{ property.checkIn|date("H:i") }} a.m.</p>
+            </div>
+            <div class="property-param">
+                <img class="property-icon" src="{{ asset('img/check-out.png') }}" alt="check-out">
+                <p>{{ property.checkOut|date("H:i") }} p.m.</p>
+            </div>
+            <div class="property-param">
+                <img class="property-icon" src="{{ asset('img/bed.jpg') }}" alt="bed">
+                <p>{{ property.nbRoom }} {{ property.nbRoom > 1 ? 'beds' : 'bed' }}</p>
             </div>
         </div>
     </div>
