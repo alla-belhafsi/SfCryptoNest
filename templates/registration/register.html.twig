@@ -8,9 +8,9 @@
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
 
-    <h3 class="center">Please sign up</h3>
-    <div class="security-container">
+        <h3 class="center">Please sign up</h3>
 
+        <div class="login-card">
         {{ form_start(registrationForm, {'attr': {'id': 'registration_form'}}) }}
             <div class="form-row">
                 <div class="form-col-sm">
@@ -20,8 +20,10 @@
                     {{ form_row(registrationForm.lastname) }} 
                 </div>
             </div>
-            <div class="form-col">
-                {{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+            <div class="form-row">
+                <div class="form-col">
+                    {{ form_row(registrationForm.email, {'attr': {'class': 'form-control'}}) }}
+                </div>
             </div>
             <div class="form-row">
                 <div class="form-col-sm">
@@ -31,7 +33,7 @@
                     {{ form_row(registrationForm.plainPassword.second, {'label': 'Repeat Password', 'attr': {'class': 'form-control'}}) }}
                 </div>
             </div>
-    </div>
+        </div>
             <div>
                 {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input', 'id': 'agreeTerms'}}) }}
                 {{ form_label(registrationForm.agreeTerms, 'I agree with the terms and conditions', {'label_attr': {'class': 'form-check-label'}}) }}

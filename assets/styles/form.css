@@ -26,11 +26,6 @@
     padding-block: 5px;
 }
 
-.security-container {
-    margin-block: 30px;
-}
-
-
 .publish-btn {
     text-align: center;
     color: #007bff;
@@ -54,7 +49,7 @@
 }
 
 .form-col {
-    width: 380px;
+    width: 400px;
 }
 
 .form-control {
