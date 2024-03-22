@@ -189,6 +189,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    width: 1200px;
     margin-block: 15px;
     gap: 15px;
 }
@@ -197,8 +198,8 @@
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -20px;
     background-color: #aaaaaa;
     border-radius: 10px;
-    width: 275px;
-    padding: 5px;
+    width: 270px;
+    padding-inline: 10px;
     text-align: justify;
     overflow: hidden;
     cursor: default;
