@@ -77,9 +77,93 @@
             </div>
 
         </div>
-
     </div>
+
+    <!-- AFFICHAGE DU COMMENTAIRE OU DU FORMULAIRE D'AVIS SUR L'ANNONCE (qui ne peut être affiché qu'après que le séjour soit fini) -->
+    <div class="feedback tac">
+        {# Condition pour que le formulaire ne s'affiche qu'après la fin du séjour #}
+        {# Si la date d'aujourd'hui (date()) est supérieur à la date de fin de la réservation (date(booking.endDate) alors ...#}
+        {% if date() > booking.endDate %}
+        <h3>Your feedback matters !</h3>
+            {{ form_start(formAddFeedback) }}
+                <div class="host-container tac">
+                    <div class="host-container1">
+                        <div class="form-col">
+                            {{ form_label(formAddFeedback.rating, 'Rating', {'label_attr': {'for': 'rating'}}) }}
+                            <div class="star-rating" id="star-rating">
+                                <span class="star" data-rating="1">&#9733;</span>
+                                <span class="star" data-rating="2">&#9733;</span>
+                                <span class="star" data-rating="3">&#9733;</span>
+                                <span class="star" data-rating="4">&#9733;</span>
+                                <span class="star" data-rating="5">&#9733;</span>
+                            </div>
+                            {{ form_widget(formAddFeedback.rating, {'id': 'rating_input', 'attr': {'style': 'display: none'}}) }}
+                        </div>
+                        <div class="form-row">
+                            <div class="form-col">
+                                {{ form_row(formAddFeedback.comment) }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="publish-btn">
+                    {{ form_row(formAddFeedback.publish) }}
+                </div>
+            
+                {{ form_errors(formAddFeedback) }}
+            {{ form_end(formAddFeedback) }}
+        {% elseif booking.property.feedback is not empty %}
+            <h3>Travelers' Experiences</h3>
+            <div class="feedback-container tac">
+                {% for feedback in booking.property.feedback %}
+                    <div class="feedback-card">
+                        <div class="star-rating">
+                            {% for i in 1..5 %}
+                                {% if i <= feedback.rating %}
+                                    <span class="star rated">&#9733;</span>
+                                {% else %}
+                                    <span class="star">&#9733;</span>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <p><strong>{{ feedback.user.username }}:</strong> {{ feedback.comment }}</p>
+                        <a class="delete-btn" href="{{ path('delete_feedback', {'id': feedback.id}) }}"><span class="material-symbols-outlined">delete</span></a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="host-container tac">
+                <p>You can only leave a review at the end of your stay !</p>
+            </div>
+        {% endif %}
+    </div>
+
     {% block javascripts %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const stars = document.querySelectorAll(".star");
+                const ratingInput = document.getElementById("rating_input");
+                const starRating = document.getElementById("star-rating");
+            
+                stars.forEach(function(star) {
+                    star.addEventListener("click", function() {
+                        const rating = this.dataset.rating;
+                        ratingInput.value = rating;
+                        updateStars(rating);
+                    });
+                });
+            
+                function updateStars(rating) {
+                    stars.forEach(function(star) {
+                        if (star.dataset.rating <= rating) {
+                            star.classList.add("rated");
+                        } else {
+                            star.classList.remove("rated");
+                        }
+                    });
+                }
+            });
+        </script>
         <script>
             // Obtenez la date de début à partir de l'attribut de données
             var startDateStr = document.getElementById("countdown").getAttribute("data-start-date");

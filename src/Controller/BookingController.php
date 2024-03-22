@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Booking;
+use App\Entity\Feedback;
 use App\Entity\Property;
 use App\Form\BookingType;
+use App\Form\FeedbackType;
 use App\Repository\BookingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -128,11 +130,46 @@ class BookingController extends AbstractController
 
     # Définir une nouvelle route pour voir le détail d'une réservation
     #[Route('/booking/{id}', name: 'show_booking')]
-    public function show (Booking $booking): Response
+    public function show(Booking $booking, Request $request, EntityManagerInterface $entityManager): Response
     {
+        
+        // Récupérer l'utilisateur connecté
+        $user = $this->getUser();
+        // Récupérer l'annonce de la réservation actuelle
+        $property = $booking->getProperty();
+
+        $feedback = new Feedback();
+
+        // Prédéfinir Feedback.user.id en tant que app.user.id
+        $feedback->setUser($user);
+        // Prédéfinir Feedback.user.id en tant que booking.property.id
+        $feedback->setProperty($property);
+
+        // Prédéfinir feedback.createdAt avec la date et l'heure d'aujourd'hui en France
+        $feedback->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris')));
+
+        $form = $this->createForm(FeedbackType::class, $feedback);
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // ajouter la réservation actuelle à la rétroaction
+            // $feedback->setBooking($booking);
+
+            $entityManager->persist($feedback);
+            $entityManager->flush();
+
+            // addFlash() sert à notifier l'utilisateur de ce qui a été fait (param 1 = type de message, param 2 = message)
+            $this->addFlash(
+                'success',
+                "Your feedback has been successfully received !"
+            );
+        }
 
         return $this->render('booking/showBooking.html.twig', [
             'booking' => $booking,
+            'formAddFeedback' => $form->createView()
         ]);
     }
+
 }

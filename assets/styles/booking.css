@@ -166,6 +166,42 @@
     transform: scale(1.1);
 }
 
+/* ================== FEEDBACK ======================== */
+
+.feedback {
+    margin-top: 30px;
+}
+
+.star-rating {
+    font-size: 30px;
+}
+
+.star {
+    cursor: pointer;
+}
+
+.star:hover,
+.star.rated {
+    color: orange;
+}
+
+.feedback-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-block: 15px;
+    gap: 15px;
+}
+
+.feedback-card {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -20px;
+    background-color: #aaaaaa;
+    border-radius: 10px;
+    width: 250px;
+    overflow: hidden;
+    cursor: default;
+}
+
 /* =============== MOBILE VERSION ===================== */
 
 @media screen and (max-width: 375px) {
@@ -270,7 +306,9 @@
     
 
     /*================ REFERENCE =================*/
-
+    .booking-infos {
+        flex-direction: row;
+    }
     
 
     /*================ REFERENCE =================*/

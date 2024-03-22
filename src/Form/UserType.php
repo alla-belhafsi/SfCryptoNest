@@ -32,6 +32,7 @@ class UserType extends AbstractType
         // 2ème Méthode : Vérifie si l'utilisateur a le rôle de traveller ou host
         // $isUser = $this->authorizationChecker->isGranted('ROLE_USER')
         // || $this->authorizationChecker->isGranted('ROLE_HOST');
+
         if ($isAdmin) {
             $builder->add('roles', ChoiceType::class, [
                 'choices' => [
@@ -75,7 +76,7 @@ class UserType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     // 'readonly' => $isAdmin,
-                    'required' => false,
+                    // 'required' => false,
                 ]
             ])
             // ->add('isVerified')

@@ -6,44 +6,42 @@
     <h3>MY RESERVATIONS</h3>
     
     <div class="home-container">
-        {% for booking in app.user.bookings %}
-
-            <div class="property-card">
-                <div class="property-card-header">
-                    <a href="{{ path('show_booking', {'id': booking.id} ) }}">
-                        <img src="{{ asset(booking.property.cover) }}" alt="cover"> 
-                    </a>
-                    {% if booking.user.id == app.user.id %}
+        {% for booking in bookings %}
+            {% if booking.user.id == app.user.id %}
+                <div class="property-card">
+                    <div class="property-card-header">
+                        <a href="{{ path('show_booking', {'id': booking.id} ) }}">
+                            <img src="{{ asset(booking.property.cover) }}" alt="cover"> 
+                        </a>
                         <div class="property-UD">
                             <a class="edit-btn" href="{{ path('edit_booking', {'id': booking.id}) }}"><span class="material-symbols-outlined">settings</span></a>
                             <a class="delete-btn" href="{{ path('delete_booking', {'id': booking.id}) }}"><span class="material-symbols-outlined">delete</span></a>
                         </div>
-                    {% endif %}
+                    </div>
+                    <h3>{{ booking.property.title }}</h3>
+                    <p>
+                        <strong>{{booking.property.address}}</strong>
+                    </p>
+                    <p>
+                        <strong>{{booking.property.zip}} {{booking.property.city}}</strong>
+                    </p>
+                    <p>
+                        <strong>{{booking.property.country}}</strong>
+                    </p>
+                    <p>Booking number: n°{{booking.id}}</p>
+                    <p>
+                        Arriving: {{booking.startDate | date('d/m/Y')}} - Departure: {{booking.endDate | date('d/m/Y')}}
+                    </p>
+                    <p>
+                        Duration: {{booking.duration}} days
+                    </p>
+                    <p>
+                        Total amount: <strong>{{
+                        (booking.duration|default(0) * booking.property.price|default(0)) | number_format(2, ',')}} €</strong>
+                    </p>
+
                 </div>
-                <h3>{{ booking.property.title }}</h3>
-                <p>
-                    <strong>{{booking.property.address}}</strong>
-                </p>
-                <p>
-                    <strong>{{booking.property.zip}} {{booking.property.city}}</strong>
-                </p>
-                <p>
-                    <strong>{{booking.property.country}}</strong>
-                </p>
-                <p>Booking number: n°{{booking.id}}</p>
-                <p>
-                    Arriving: {{booking.startDate | date('d/m/Y')}} - Departure: {{booking.endDate | date('d/m/Y')}}
-                </p>
-                <p>
-                    Duration: {{booking.duration}} days
-                </p>
-                <p>
-                    Total amount: <strong>{{
-                    (booking.duration|default(0) * booking.property.price|default(0)) | number_format(2, ',')}} €</strong>
-                </p>
-
-            </div>
-
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}

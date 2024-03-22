@@ -10,16 +10,17 @@
 .first-part-property {
     display: block;
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 70px;
 }
 .first-part-property h2 {
     margin-bottom: 20px;
-    font-size: 38px;
+    font-size: 47px;
 }
 
 .second-part-property {
     display: flex;
     flex-wrap: wrap;
+    vertical-align: auto;
     justify-content: center;
     gap: 70px;
 }
@@ -43,7 +44,6 @@
 }
 
 .property-content-card {
-    /* box-shadow: rgba(68,117,196,0.548) 0px 13px 27px -5px, rgba(68,117,196,0.548) 0px 8px 16px -8px; */
     text-align: justify;
     width: 400px; 
     height: fit-content;
@@ -62,12 +62,11 @@
 .property-icons {
     display: flex;
     flex-direction: column;
-    margin-top: 15px;
     gap: 30px;
 }
 .property-icon {
     box-sizing: border-box;
-    border: 1px solid #000;
+    border: 2px solid #AD8D29;
     border-radius: 50%;
     clip-path: circle(55%);
     width: 75px;
@@ -231,8 +230,9 @@
     justify-content: space-between;
 }
 
-.book-btn {
+.bg-btn {
     display: inline-block;
+    text-decoration: none;
     background-color: #fff;
     border-color: #000;
     color: #AD8D29;
@@ -245,7 +245,7 @@
     transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
-.book-btn:hover {
+.bg-btn:hover {
     background-color: #4C4C4C;
     border-color: #fff;
     box-shadow: 0 2px 5px rgba(38, 57, 77, 0.5);
@@ -388,14 +388,14 @@
     
 
     /*================ REFERENCE =================*/
-    .property-icons {
+    /* .property-icons {
         flex-direction: row;
     }
 
     .property-param {
         flex-direction: column;
         gap: 5px;
-    }
+    } */
     
 
     /*================ REFERENCE =================*/
@@ -414,14 +414,6 @@
     
 
     /*================ REFERENCE =================*/
-    .property-icons {
-        flex-direction: row;
-    }
-
-    .property-param {
-        flex-direction: column;
-        gap: 5px;
-    }
     
 
     /*================ REFERENCE =================*/
