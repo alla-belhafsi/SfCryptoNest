@@ -26,23 +26,6 @@
                 {% endif %}
             </left>
             <mid class="midNav">
-                {# <div class="sidebar-search">
-
-                    <div class="input-group custom-search-form">
-                        <input type="text" id="search" class="form-control" placeholder="Search here">
-                    </div>
-                </div> #}
-                {# <ul class="midMidNav">
-                    {% if not app.user %}
-                        <a href="{{ path('app_login') }}">LOGIN</a>
-                    {% else %}
-                        <a href="{{ path('app_logout') }}">LOGOUT</a>
-                    {% endif %}
-                    <a href="{{ path('app_register') }}">SIGN UP</a>
-                    <a href="SERVICES">HOST</a>
-                    <a href="MENU">MENU</a>
-                    <a href="CONTACT">CONTACT</a>
-                </ul> #}
                 <form action="{{ path('search_by_city') }}" method="get">
                     <label for="city"></label>
                     <input type="text" id="city" name="city" class="search-form-control" value="{{ app.request.query.get('city') }}" placeholder="WHERE ?"/>
@@ -76,8 +59,9 @@
                             </label>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ path('show_user', {'id': app.user.id}) }}">MY PROFILE</a></li>
-                                <li><a href="{{ path('app_booking') }}">MY RESERVATIONS</a></li>
-                                {# <li><a href="{{ path('app_property') }}">MY PROPERTIES</a></li> #}
+                                {% if app.user.bookings is not empty %}
+                                    <li><a href="{{ path('app_booking') }}">MY RESERVATIONS</a></li>
+                                {% endif %}
                                 {% if app.user.properties is not empty %}
                                     <li><a href="{{ path('app_property') }}">MY PROPERTIES</a></li>
                                 {% endif %}
