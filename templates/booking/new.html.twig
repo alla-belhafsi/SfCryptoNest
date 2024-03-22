@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+{% block title %}Book now!{% endblock %}
+
+{% block body %}
+    <h3 class="title">Book {{ booking.property.title }}</h3>
+
+    {{ form_start(formAddBooking) }}
+    <div class="host-container tac">
+        <div class="host-container1">
+            <div id="calendrier"></div>
+            <div class="form-row">
+                <div class="form-col-sm">
+                    {{ form_row(formAddBooking.startDate) }}
+                </div>
+                <div class="form-col-sm">
+                    {{ form_row(formAddBooking.endDate) }}
+                </div>
+            </div>
+            <h4>Duration of Stay: <span id="timespan">...</span> days</h4>
+            <h4>Stay Amount: <span class="form-col-sm" id="amount">...</span> €</h4>
+
+            {% set messages = app.flashes %}
+            {% for type, message in messages %}
+                {% if type == 'error' %}
+                    <div class="alert alert-danger">
+                        {{ message[0] }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    <div class="publish-btn">
+        {{ form_row(formAddBooking.Book) }}
+    </div>
+    {{ form_errors(formAddBooking) }}
+    {{ form_end(formAddBooking) }}
+    {% block javascripts %}
+        <script>
+            window.onload = () => {
+                let calendarElt = document.querySelector("#calendrier");
+                let calendar = new FullCalendar.Calendar(calendarElt, {
+                    initialView: 'dayGridMonth',
+                    locale: 'en',
+                    timeZone: 'Europe/Paris',
+                    headerToolbar: {
+                        start: 'prev,next today',
+                        center: 'title',
+                        end: 'dayGridMonth'
+                    },
+                    events: [],
+                    // Couleur pour les dates réservées
+                    eventColor: '#ff6666',
+                    // Permettre la sélection de dates
+                    selectable: true,
+                    // Plage de dates autorisées
+                    validRange: {
+                        // A partir d'aujourd'hui
+                        start: new Date().toISOString().split('T')[0],
+                        // Jusqu'à l'infini
+                        end: null 
+                    },
+                });
+                
+                // Fonction pour calculer la durée totale du séjour en jours
+                function calculateDuration(startDate, endDate) {
+                    const start = new Date(startDate);
+                    const end = new Date(endDate);
+                    const DAY_TIME = 24 * 60 * 60 * 1000; // Jour en millisecondes
+                    const duration = Math.round(Math.abs((end - start) / DAY_TIME));
+                    return duration;
+                }
+            
+                // Fonction pour update l'affichage de la durée totale du séjour en jours
+                function updateDuration() {
+                    const startDate = document.querySelector("#{{ formAddBooking.startDate.vars.id }}").value;
+                    const endDate = document.querySelector("#{{ formAddBooking.endDate.vars.id }}").value;
+                    const duration = calculateDuration(startDate, endDate);
+                    document.querySelector("#timespan").textContent = duration;
+                }
+            
+                function calculateAmount(startDate, endDate) {
+                    // Convert dates to Date objects
+                    const start = new Date(startDate);
+                    const end = new Date(endDate);
+                    const propertyPrice = parseFloat("{{ booking.property.price }}")
+                    // If there are start and end dates, and if start date is before end date
+                    if(startDate && endDate && start < end){ 
+                        const DAY_TIME = 24 * 60 * 60 * 1000;
+                        // Calculate interval between the two dates (.getTime transforms Javascript object into a timestamp in milliseconds)
+                        const interval = end.getTime() - start.getTime();
+                        const days = interval / DAY_TIME;
+                        const amount = days * propertyPrice;
+            
+                        // Update HTML element directly with ID 'amount'
+                        document.querySelector("#amount").textContent = amount.toFixed(2);
+                    } else {
+                        // If dates are invalid, update HTML element with an error message or a default value
+                        document.querySelector("#amount").textContent = "Sélectionnez des dates valides";
+                    }
+                }
+            
+                function updateAmount() {
+                    const startDate = document.querySelector("#{{ formAddBooking.startDate.vars.id }}").value;
+                    const endDate = document.querySelector("#{{ formAddBooking.endDate.vars.id }}").value;
+            
+                    // Calculate amount based on selected dates
+                    calculateAmount(startDate, endDate);
+                }
+            
+                let startDate = null;
+            
+                // Gestionnaire d'événement pour la sélection de dates dans le calendrier
+                calendar.on('dateClick', function(info) {
+                    const startDateInput = document.querySelector("#{{ formAddBooking.startDate.vars.id }}");
+                    const endDateInput = document.querySelector("#{{ formAddBooking.endDate.vars.id }}");
+                
+                    if (!startDate) {
+                        // Si la date de départ n'est pas encore définie, définissez-la avec la date sélectionnée
+                        startDate = info.date;
+                        startDateInput.value = info.dateStr;
+                    } else {
+                        // Si la date de départ est déjà définie, définissez la date de fin avec la date sélectionnée
+                        const endDate = info.date;
+                        startDateInput.value = startDate.toISOString().split('T')[0];
+                        endDateInput.value = endDate.toISOString().split('T')[0];
+                        
+                        // Réinitialiser la variable de date de départ pour la prochaine sélection
+                        startDate = null;
+                        
+                        // Mettre à jour le montant et la durée du séjour
+                        updateAmount(); 
+                        updateDuration();
+                    }
+                });
+            
+                // Listen for changes in the form fields and update the amount
+                document.querySelector("#{{ formAddBooking.startDate.vars.id }}").addEventListener('change', updateAmount);
+                document.querySelector("#{{ formAddBooking.endDate.vars.id }}").addEventListener('change', updateAmount);
+            
+                
+                // Function to fetch updated dates from the server or any other source
+                function getUpdatedDates() {
+                    // Récupérer les données transmises par le contrôleur
+                    const bookedDates = JSON.parse('{{ bookedDates|raw }}');
+                    return bookedDates;
+                }
+                
+                // Function to update bookedDates and rerender the calendar
+                function updateCalendar() {
+                    // Assign the updated dates to the bookedDates variable
+                    let bookedDates = getUpdatedDates();
+            
+                    // Rerender the calendar with updated events
+                    calendar.removeAllEvents();
+                    calendar.addEventSource(bookedDates);
+                    calendar.refetchEvents();
+                }
+            
+                // Listen for changes in the form fields and update the calendar
+                document.querySelector("#{{ formAddBooking.startDate.vars.id }}").addEventListener('change', updateCalendar);
+                document.querySelector("#{{ formAddBooking.endDate.vars.id }}").addEventListener('change', updateCalendar);
+                
+                // Appel initial pour mettre à jour le calendrier avec les dates réservées
+                updateCalendar();
+                calendar.render();
+            }            
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js" integrity="sha256-i4vDW9EgtaJmeauDDymtNF2omPZ1fCKpf4w1gBlU1IE=" crossorigin="anonymous"></script>
+    {% endblock %}
+{% endblock %}

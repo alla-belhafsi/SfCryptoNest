@@ -1,0 +1,235 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Quicksand:wght@300..700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Oswald", sans-serif;
+}
+
+/* =================== BOOKING FORM ========================= */
+
+#calendrier {
+    width: 100%;
+    margin: auto;
+}
+
+.displayAmount {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+}
+.displayAmount h4 {
+    margin-inline: 5px;
+}
+.totalAmount {
+    text-align: center;
+    width: 100px;
+    height: 30px;
+    color: #000;
+    font-size: larger;
+    font-weight: bold;
+}
+
+/* =============== BOOKING CONFIRMATION ===================== */
+
+.booking-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #000;
+    border-radius: 5px;
+    margin-top: 30px;
+    cursor: default;
+}
+
+.booking-table td, .booking-table th {
+    padding-inline: 20px; 
+    padding-block: 7px;
+    font-weight: 600;
+}
+
+.booking-table th {
+    background-color: #4C4C4C;
+    font-weight: semi-bold;
+    color: #fff;
+}
+
+.booking-table td {
+    background-color: #fff;
+    color: #666;
+}
+
+.welcome-booking {
+    text-align: center;
+    width: 60%;
+    margin-block: 50px;
+}
+
+.checkin-highlight {
+    font-weight: bold;
+    color: #007bff; 
+}
+
+.checkout-highlight {
+    font-weight: bold;
+    color: #dc3545;
+}
+
+.property-details {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 100px;
+}
+
+#countdownText {
+    box-sizing: content-box;
+    position: absolute;
+    cursor: default;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5); 
+    color: #fff;
+    font-size: 28px; 
+    border: 1px solid #000;
+    width: 100%;
+}
+
+.booking-cover-property {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-sizing: content-box;
+    width: 500px;
+    height: 300px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 10px;
+}
+
+.booking-cover-property img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    object-fit: contain;
+}
+
+.booking-infos {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+
+.booking-location {
+    box-sizing: border-box;
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+
+.link-to-host {
+    text-decoration: none;
+    border: 1px solid #000;
+    border-radius: 5px;
+    width: fit-content;
+    color: #000;
+    font-size: 14px;
+    padding: 0px 5px 2px 5px;
+    margin: 5px 5px 5px 0px;
+    transition: transform 0.5s, box-shadow 0.5s;
+}
+
+.link-to-host:hover {
+    box-shadow: 0 2px 5px rgba(38, 57, 77, 0.5);
+    transform: scale(1.1);
+}
+
+.msg-btn {
+    display: inline-block;
+    text-decoration: none;
+    background-color: #fff;
+    border-color: #000;
+    color: #AD8D29;
+    font-weight: 500;
+    font-size: 14px;
+    border: 1px solid #000;
+    width: fit-content;
+    margin-top: 10px;
+    padding: 0px 6px 3px 6px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out, border-color 0.3s ease-in-out, box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.msg-btn:hover {
+    background-color: #4C4C4C;
+    border-color: #fff;
+    box-shadow: 0 2px 5px rgba(38, 57, 77, 0.5);
+    transform: scale(1.1);
+}
+
+/* =============== MOBILE VERSION ===================== */
+
+@media screen and (max-width: 550px) {
+    
+    /*================ REFERENCE =================*/
+
+    
+
+    /*================ REFERENCE =================*/
+
+    
+    /*================ REFERENCE =================*/
+
+    
+
+    /*================ REFERENCE =================*/
+
+    
+}
+
+@media screen and (min-width: 550px) and (max-width: 744px) {
+    
+
+    /*================ REFERENCE =================*/
+
+    
+
+    /*================ REFERENCE =================*/
+
+    
+    /*================ REFERENCE =================*/
+
+    
+
+    /*================ REFERENCE =================*/
+
+    
+}
+
+@media screen and (min-width: 744px) and (max-width: 950px) {
+    
+
+    .booking-infos {
+        flex-direction: row;
+    }
+
+
+}
+
+@media screen and (min-width: 950px) and (max-width: 1024px) {
+    
+
+    /*================ REFERENCE =================*/
+
+    
+
+    /*================ REFERENCE =================*/
+
+    
+    /*================ REFERENCE =================*/
+
+    
+
+    /*================ REFERENCE =================*/
+
+    
+}

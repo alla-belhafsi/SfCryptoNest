@@ -1,0 +1,83 @@
+{# PAGE DE DESCRIPTION DE LA RESERVATION #}
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation n°{{ booking.id }}{% endblock %}
+
+{% block body %}
+
+    <h2>{{ booking.property.title }}</h2>
+
+    {% set messages = app.flashes %}
+    {% for type, message in messages %}
+        {% if type == 'success' %}
+            <div class="alert alert-success">
+                {{ message[0] }}
+            </div>
+        {% endif %}
+    {% endfor %}
+    
+    <!-- DESCRIPTION DE LA RESERVATION -->
+    <h3>Ready for the trip to {{ booking.property.city }}, in {{ booking.property.country }} !</h3>
+    <table class="booking-table">
+        <thead>
+            <th>Booking date</th>
+            <th>Reservation number</th>
+            <th>Arrival date</th>
+            <th>Departure date</th>
+            <th>Number of nights</th>
+            <th>Total amount</th>
+        </thead>
+        <tbody>
+            <tr class="tac">
+                <td>{{ booking.bookingDate | date('d/m/Y') }}</td>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.startDate | date('d/m/Y') }}</td>
+                <td>{{ booking.endDate | date('d/m/Y') }}</td>
+                <td>{{ booking.duration }}</td>
+                <td colspan="3">{{ booking.amount | number_format(2, ',') }} &euro;</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h4 class="welcome-booking">
+        Welcome to your home away from home! Your delightful accommodation awaits you starting from {{ booking.startDate | date('d/m/Y') }} at <span class="checkin-highlight">{{ booking.property.checkIn|date("H:i") }}</span> in the afternoon. As your journey with us concludes on {{ booking.endDate | date('d/m/Y') }} at <span class="checkout-highlight">{{ booking.property.checkOut|date("H:i") }}</span> in the morning, we bid you farewell until next time. Enjoy your stay!
+    </h4>
+
+    <!-- DESCRIPTION DE ADRESSE DE L'HÉBERGEMENT ET L'HÔTE -->
+
+    <div class="property-details">
+
+        <!-- IMAGE DE L'ANNONCE RESERVÉE AVEC COUNTDOWN -->
+        <div id="countdown" class="booking-cover-property" data-start-date="{{ booking.startDate|date('d/m/Y') }}" data-checkin-time="{{ booking.property.checkIn|date('H:i') }}">
+            <img src="{{ asset (booking.property.cover) }}" alt="Image de {{ booking.property.title }}">
+            <div id="countdownText"></div>
+        </div>
+
+        <div class="booking-infos">
+
+            <!-- DESCRIPTION DE L'ADRESSE -->
+            <div class="booking-location">
+                <p><strong>Address:</strong> {{ booking.property.address }}</p>
+                <p><strong>City:</strong> {{ booking.property.city }}</p>
+                <p><strong>ZIP:</strong> {{ booking.property.zip }}</p>
+                <p><strong>Country:</strong> {{ booking.property.country }}</p>
+            </div>
+
+            <!-- DESCRIPTION DE L'HÔTE -->
+            <div class="booking-location">
+                <p><strong>Your host:</strong> <a class="link-to-host" href="{{ path('show_user', {'id': booking.property.user.id}) }}">{{booking.property.user.username}}</a></p>
+                <p><strong>Accommodations:</strong> {{ booking.property.user.properties | length }} {{ booking.property.user.properties | length == 1 ? 'property' : 'properties' }}</p>
+                <p><strong>Member since:</strong> {{ booking.property.user.createdAt|date('M Y') }}</p>
+                <div>
+                    <h4 class="tac">
+                        <a href="" class="msg-btn">Send a message</a>
+                    </h4>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
