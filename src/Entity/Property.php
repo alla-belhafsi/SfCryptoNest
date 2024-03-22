@@ -55,7 +55,7 @@ class Property
     #[ORM\ManyToOne(inversedBy: 'properties')]
     private ?user $user = null;
 
-    #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'Property')]
+    #[ORM\OneToMany(targetEntity: Booking::class, mappedBy: 'property')]
     private Collection $bookings;
 
     #[ORM\Column]
@@ -66,6 +66,29 @@ class Property
         $this->bookings = new ArrayCollection();
     }
 
+    public function getNotAvailableDays(){
+        $notAvailableDays = [];
+    
+        // Boucle sur les réservations
+        foreach($this->bookings as $booking){
+            $startDate = $booking->getStartDate();
+            $endDate = $booking->getEndDate();
+    
+            // Calcul des jours entre la date de début et de fin
+            $currentDate = clone $startDate;
+            while ($currentDate <= $endDate) {
+                // Vérifier si la date est déjà dans le tableau $notAvailableDays
+                if (!in_array($currentDate, $notAvailableDays)) {
+                    // Si elle n'y est pas, l'ajouter
+                    $notAvailableDays[] = clone $currentDate;
+                }
+                $currentDate->modify('+1 day');
+            }
+        }
+    
+        return $notAvailableDays;
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -215,6 +238,18 @@ class Property
         return $this;
     }
 
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
     public function getUser(): ?user
     {
         return $this->user;
@@ -253,18 +288,6 @@ class Property
                 $booking->setProperty(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCreatedAt(): ?\DateTimeImmutable
-    {
-        return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
-    {
-        $this->createdAt = $createdAt;
 
         return $this;
     }

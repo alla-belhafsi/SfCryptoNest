@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="{{ asset('styles/app.css') }}"/>
         <link rel="stylesheet" href="{{ asset('styles/home.css') }}"/>
         <link rel="stylesheet" href="{{ asset('styles/property.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('styles/booking.css') }}"/>
         <link rel="stylesheet" href="{{ asset('styles/user.css') }}"/>
         <link rel="stylesheet" href="{{ asset('styles/form.css') }}"/>
         {% endblock %}
@@ -75,7 +76,7 @@
                             </label>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ path('show_user', {'id': app.user.id}) }}">MY PROFILE</a></li>
-                                <li><a href="">MY RESERVATIONS</a></li>
+                                <li><a href="{{ path('app_booking') }}">MY RESERVATIONS</a></li>
                                 {# <li><a href="{{ path('app_property') }}">MY PROPERTIES</a></li> #}
                                 {% if app.user.properties is not empty %}
                                     <li><a href="{{ path('app_property') }}">MY PROPERTIES</a></li>

@@ -24,7 +24,7 @@
             </div>
             <div class="property-price-book">
                 <strong>{{ property.price }} € per day</strong>
-                <button class="book-btn" type="">Book now</button>
+                <a class="book-btn" href="{{ path('new_booking', {'propertyId': property.id}) }}">Book now</a>
             </div>
         </div>
     </div>

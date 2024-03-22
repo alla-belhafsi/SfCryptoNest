@@ -22,9 +22,9 @@
                     <div class="property-card-box">
                         <strong class="property-card-localisation">{{ property.city }}, {{ property.country }}</strong>
                         {% if property.user.username is not empty %}
-                            <a class="property-card-host" href="">{{ property.user.username }}</a>
+                            <a class="property-card-host" href="{{ path('show_user', {'id': property.user.id}) }}">{{ property.user.username }}</a>
                         {% else %}
-                            <a class="property-card-host" href="">{{ property.user.email|split('@')|first }}</a>            
+                            <a class="property-card-host" href="{{ path('show_user', {'id': property.user.id}) }}">{{ property.user.email|split('@')|first }}</a>            
                         {% endif %}
                     </div>
 

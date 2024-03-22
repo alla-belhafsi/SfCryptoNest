@@ -39,7 +39,7 @@ class PropertyController extends AbstractController
             $property->setUser($user);
 
             // Prédéfinir property.createdAt avec la date d'aujourd'hui
-            $property->setCreatedAt(new \DateTimeImmutable());
+            $property->setCreatedAt(new \DateTimeImmutable('now', new \DateTimeZone('Europe/Paris')));
         
             // Créer un formulaire basé sur le type de formulaire PropertyType et l'entité Property
             $form = $this->createForm(PropertyType::class, $property, [
