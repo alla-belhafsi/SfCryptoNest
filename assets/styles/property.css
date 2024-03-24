@@ -105,7 +105,7 @@
 
 .property-card-header {
     height: 200px;
-    overflow: hidden;
+    /* overflow: hidden; */
     position: relative;
    
 }

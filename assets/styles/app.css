@@ -215,8 +215,9 @@ body {
 }
 
 .title {
-    font-size: 24px;
-    margin-block: 20px;
+    font-size: 32px;
+    font-family: "Quicksand";
+    margin-bottom: 50px;
 }
 
 .gold-text-stroke {
@@ -374,16 +375,16 @@ body {
 
 .footerContainer {
     display: block;
+    height: fit-content;
     align-content: end;
     position: relative;
-    background-color: #000;
-    
+    background-color: #4C4C4C;
+    margin-top: 50px;
 }
 .footerTitle {
-    background-color: #000;
     color: #fff;
     text-align: center;
-    margin-top: 50px;
+    margin-top: -5px;
 }
 
 /* =============== MOBILE VERSION ===================== */
