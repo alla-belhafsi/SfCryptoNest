@@ -20,6 +20,7 @@ class FeedbackType extends AbstractType
     {
         $builder
             ->add('createdAt', DateTimeType::class, [
+                'widget' => 'single_text',
                 'label' => false,
                 'attr' => [
                     'style' => 'display: none;'
@@ -36,7 +37,10 @@ class FeedbackType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'style' => 'display: none;',
-                ]
+                ],
+                'label_attr' => [
+                    'for' => 'rating_input', 
+                ],
             ])
             ->add('user', EntityType::class, [
                 'label' => false,
@@ -56,7 +60,7 @@ class FeedbackType extends AbstractType
             ])
             ->add('publish', SubmitType::class, [
                 'attr' => [
-                    'class' => 'publish-btn'
+                    'class' => 'msg-btn'
                 ]
             ])
         ;

@@ -6,7 +6,7 @@
 
 {% block body %}
 
-    <h2>{{ booking.property.title }}</h2>
+    <h2 class="title">{{ booking.property.title }}</h2>
 
     {% set messages = app.flashes %}
     {% for type, message in messages %}
@@ -51,7 +51,7 @@
         <!-- IMAGE DE L'ANNONCE RESERVÉE AVEC COUNTDOWN -->
         <div id="countdown" class="booking-cover-property" data-start-date="{{ booking.startDate|date('d/m/Y') }}" data-checkin-time="{{ booking.property.checkIn|date('H:i') }}">
             <img src="{{ asset (booking.property.cover) }}" alt="Image de {{ booking.property.title }}">
-            <div id="countdownText"></div>
+            <div id="countdownText_{{ booking.id }}" class="cd-text cd-style2"></div>
         </div>
 
         <div class="booking-infos">
@@ -69,6 +69,14 @@
                 <p><strong>Your host:</strong> <a class="link-to-host" href="{{ path('show_user', {'id': booking.property.user.id}) }}">{{booking.property.user.username}}</a></p>
                 <p><strong>Accommodations:</strong> {{ booking.property.user.properties | length }} {{ booking.property.user.properties | length == 1 ? 'property' : 'properties' }}</p>
                 <p><strong>Member since:</strong> {{ booking.property.user.createdAt|date('M Y') }}</p>
+
+                {# Vérifie si la date d'adhésion de l'utilisateur est antérieure à un an avant la date actuelle #}
+                {# {% if currentDate >= endDate %}
+                    <p><strong>Member since:</strong> {{ diffYears }} {{ diffYears > 1 ? 'years' : 'year' }}</p>
+                {% else %}
+                    <p><strong>Member since:</strong> {{ booking.property.user.createdAt|date('M Y') }}</p>
+                {% endif %} #}
+                
                 <div>
                     <h4 class="tac">
                         <a href="" class="msg-btn">Send a message</a>
@@ -96,12 +104,12 @@
         {# {% if date() > booking.endDate %} #}
         {# Si la distance est négative, cela signifie que le compte à rebours est terminé #}
         {% if now >= endDate %}
-            <h3>Your feedback matters !</h3>
+            <h3 class="tac">Your feedback matters !</h3>
             {{ form_start(formAddFeedback) }}
-                <div class="host-container tac">
-                    <div class="host-container1">
+                <div class="feedback-container tac">
+                    <div class="feedback-form-card">
                         <div class="form-col">
-                            {{ form_label(formAddFeedback.rating, 'Rating', {'label_attr': {'for': 'rating_input'}}) }}
+                            {{ form_label(formAddFeedback.rating, 'Rating') }}
                             <div class="star-rating" id="star-rating">
                                 <span class="star" data-rating="1">&#9733;</span>
                                 <span class="star" data-rating="2">&#9733;</span>
@@ -109,19 +117,15 @@
                                 <span class="star" data-rating="4">&#9733;</span>
                                 <span class="star" data-rating="5">&#9733;</span>
                             </div>
-                            {{ form_widget(formAddFeedback.rating, {'id': 'rating_input', 'attr': {'style': 'display: none'}}) }}
                         </div>
                         <div class="form-row">
                             <div class="form-col">
                                 {{ form_row(formAddFeedback.comment) }}
                             </div>
                         </div>
+                        {{ form_row(formAddFeedback.publish) }}
                     </div>
                 </div>
-                <div class="publish-btn">
-                    {{ form_row(formAddFeedback.publish) }}
-                </div>
-            
                 {{ form_errors(formAddFeedback) }}
             {{ form_end(formAddFeedback) }}
         {% elseif booking.property.feedback is not empty %}
@@ -129,11 +133,14 @@
             <div class="feedback-container">
                 {% for feedback in booking.property.feedback %}
                     <div class="feedback-card">
-                        <div class="star-rating space-between">
-                            <strong>{{ feedback.user.username }}</strong>
-                            <div>
+                        {# Affichage de la date de publication du commentaire #}
+                        <p class="feedback-date">{{ feedback.createdAt|date('d/m/Y H:i') }}</p>
+                        <div class="space-between">
+                            {# Affichage de la date de publication du commentaire #}
+                            <a href="" class="traveler-username">{{ feedback.user.username }}</a>
+                            <div class="star-rating">
                                 {% for i in 1..5 %}
-                                    {% if i <= feedback.rating %}
+                                    {% if i >= feedback.rating %}
                                         <span class="star rated">&#9733;</span>
                                     {% else %}
                                         <span>&#9733;</span>
@@ -142,8 +149,10 @@
                             </div>
                         </div>
                         {# <p>{{ feedback.comment|split(" ")|slice(0, 15)|join(" ") }}...</p> #}
-                        <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ feedback.comment }}</p>
-                        <a class="delete-btn" href="{{ path('delete_feedback', {'id': feedback.id}) }}"><span class="material-symbols-outlined">delete</span></a>
+                        {# <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ feedback.comment }}</p> #}
+                        {# Affichage du contenu du commentaire #}
+                        <p class="feedback-comment">{{ feedback.comment }}</p>
+                        {# <a class="delete-btn" href="{{ path('delete_feedback', {'id': feedback.id}) }}"><span class="material-symbols-outlined">delete</span></a> #}
                     </div>
                 {% endfor %}
             </div>
@@ -154,33 +163,10 @@
         {% endif %}
     </div>
 
-    {% block javascripts %}
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const stars = document.querySelectorAll(".star");
-                const ratingInput = document.getElementById("rating_input");
-                const starRating = document.getElementById("star-rating");
-            
-                stars.forEach(function(star) {
-                    star.addEventListener("click", function() {
-                        const rating = this.dataset.rating;
-                        ratingInput.value = rating;
-                        updateStars(rating);
-                    });
-                });
-            
-                function updateStars(rating) {
-                    stars.forEach(function(star) {
-                        if (star.dataset.rating <= rating) {
-                            star.classList.add("rated");
-                        } else {
-                            star.classList.remove("rated");
-                        }
-                    });
-                }
-            });
-        </script>
-        <script>
+    {# {% block javascripts %} #}
+        {# <script src="{{ asset('js/feedback.js') }}"></script>
+        <script src="{{ asset('js/countdown.js') }}"></script> #}
+        {# <script>
             // Obtenez la date de début à partir de l'attribut de données
             var startDateStr = document.getElementById("countdown").getAttribute("data-start-date");
                 
@@ -219,10 +205,10 @@
               // Si le compte à rebours est terminé, écrivez un texte
               if (distance < 0) {
                 clearInterval(x);
-                document.getElementById("countdownText").innerHTML = "EXPIRED";
+                document.getElementById("countdownText").innerHTML = "ENJOY YOUR STAY !";
               }
             }, 1000);
-        </script>
-    {% endblock %}
+        </script> #}
+    {# {% endblock %} #}
 
 {% endblock %}

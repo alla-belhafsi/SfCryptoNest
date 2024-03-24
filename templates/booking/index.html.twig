@@ -3,15 +3,16 @@
 {% block title %}My Reservations{% endblock %}
 
 {% block body %}
-    <h3>MY RESERVATIONS</h3>
+    <h3 class="title">MY RESERVATIONS</h3>
     
     <div class="home-container">
         {% for booking in bookings %}
             {% if booking.user.id == app.user.id %}
                 <div class="property-card">
-                    <div class="property-card-header">
+                    <div id="countdown" class="property-card-header" data-start-date="{{ booking.startDate|date('d/m/Y') }}" data-checkin-time="{{ booking.property.checkIn|date('H:i') }}">
                         <a href="{{ path('show_booking', {'id': booking.id} ) }}">
-                            <img src="{{ asset(booking.property.cover) }}" alt="cover"> 
+                            <img src="{{ asset(booking.property.cover) }}" alt="cover">
+                            <div id="countdownText_{{ booking.id }}" class="cd-text cd-style"></div> 
                         </a>
                         <div class="property-UD">
                             <a class="edit-btn" href="{{ path('edit_booking', {'id': booking.id}) }}"><span class="material-symbols-outlined">settings</span></a>
