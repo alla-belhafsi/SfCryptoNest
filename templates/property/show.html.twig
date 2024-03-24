@@ -5,43 +5,96 @@
 {% block body %}
     <div class="first-part-property">
         <h2 class="gold-text-stroke">{{ property.title }}</h2>
-        <h3>Discover the charm of {{ property.city }}, nestled in {{ property.country }}! Book your stay now and embark on an unforgettable experience !</h3>
+        <h3>Discover the charm of {{ property.city }}, nestled in {{ property.country }} ! Book your stay now and embark on an unforgettable experience !</h3>
     </div>
 
     <div class="second-part-property">
+        {# Affichage de l'image de couverture de l'hébergement #}
+        <div class="property-cover-card">
+            <img src="{{ asset(property.cover) }}" alt="property.cover">
+        </div>
+        {# Affichage des icônes pour indiquer le check-in/check-out et le nombre de lits disponibles #}
         <div class="property-icons">
             <div class="property-param">
+                {# Affichage de l'icône de check-in #}
                 <img class="property-icon" src="{{ asset('img/check-in.png') }}" alt="check-in">
                 <p><strong>{{ property.checkIn|date("H:i") }} a.m</strong>.</p>
             </div>
             <div class="property-param">
+                {# Affichage de l'icône de check-out #}
                 <img class="property-icon" src="{{ asset('img/check-out.png') }}" alt="check-out">
                 <p><strong>{{ property.checkOut|date("H:i") }} p.m.</strong></p>
             </div>
             <div class="property-param">
+                {# Affichage de l'icône du nombre de lit(s) disponible(s) #}
                 <img class="property-icon" src="{{ asset('img/bed.jpg') }}" alt="bed">
+                {# Vérifie si le nombre de lits est supérieur à 1, puis ajoute un "s" si c'est le cas #}
                 <p><strong>{{ property.nbRoom }} {{ property.nbRoom > 1 ? 'beds' : 'bed' }}</strong></p>
             </div>
         </div>
-        <div class="property-cover-card">
-            <img src="{{ asset(property.cover) }}" alt="property.cover">
-        </div>
+        {# Affichage des informations concernant l'hébergement #}
         <div class="property-info-side">
             <div class="property-card-box">
+                {# Affichage de l'adresse de l'hébergement #}
                 <strong class="property-card-localisation">{{ property.city }}, {{ property.country }}</strong>
+                {# Affichage du username de l'hébergeur #}
                 {% if property.user.username is not empty %}
                         <a class="bg-btn" href="">{{ property.user.username }}</a>
-                    {% else %}
-                        <a class="bg-btn" href="">{{ property.user.email|split('@')|first }}</a>            
-                    {% endif %}
+                {% else %}
+                    <a class="bg-btn" href="">{{ property.user.email|split('@')|first }}</a>            
+                {% endif %}
             </div>
+            {# Affichage de la description de l'hébergement #}
             <div class="property-content-card">
                 <p>{{ property.content }}</p>
             </div>
+            {# Affichage du prix de l'hébergement et du bouton pour réserver #}
             <div class="property-price-book">
+                {# Affichage du prix de l'hébergement #}
                 <strong>{{ property.price }} € per day</strong>
+                {# Affichage du bouton pour réserver #}
                 <a class="bg-btn" href="{{ path('new_booking', {'propertyId': property.id}) }}">Book now</a>
             </div>
+        </div>
+    </div>
+    <div class="third-part-property">
+        <h3 class="tac">Traveler Experiences</h3>
+        <div class="feedback-container tac">
+            {# Si l'annonce comporte des commentaires #}
+            {% if property.feedback is not empty %}
+                {# Boucle pour afficher les commentaires laissés par les utilisateurs ayant séjourné dans l'hébergement #}
+                {% for feedback in property.feedback %}
+                    <div class="feedback-card">
+                        {# Affichage de la date de publication du commentaire #}
+                        <p class="feedback-date">{{ feedback.createdAt|date('d/m/Y H:i') }}</p>
+                        <div class="space-between">
+                            {# Affichage de la date de publication du commentaire #}
+                            <a href="" class="traveler-username">{{ feedback.user.username }}</a>
+                            {# Affichage de la note de l'hébergement (séjour) #}
+                            <div class="star-rating">
+                                {# Boucle pour déterminer l'affichage des étoiles en parcourant de 1 à 5 inclusivement #}
+                                {% for i in 1..5 %}
+                                    {# Vérifie si la valeur actuelle de l'itérateur i est inférieure ou égale à la note #}
+                                    {% if i <= feedback.rating %}
+                                        {# Affichage d'une étoile pleine #}
+                                        <span class="star rated">&#9733;</span>
+                                    {% else %}
+                                        {# Affichage d'une étoile vide #}
+                                        <span>&#9733;</span>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {# Affichage du contenu du commentaire #}
+                        <p class="feedback-comment">{{ feedback.comment }}</p>
+
+                        {# <a class="delete-btn" href="{{ path('delete_feedback', {'id': feedback.id}) }}"><span class="material-symbols-outlined">delete</span></a> #}
+                    </div>
+                {% endfor %}
+            {% else %}
+            {# Affichage d'un texte si il n'y a pas de commentaire #}
+            <p><strong>No feedbacks (yet)</strong></p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
