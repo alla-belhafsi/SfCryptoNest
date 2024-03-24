@@ -12,78 +12,79 @@
         {% endfor %}
         {% endblock %}
     </head>
-    <header>
-        <nav class="navbar">
-            <left class="leftNav">
-                <h1 ><a class="brand" href="{{ path('app_home') }}">CryptoNest</a></h1>
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="{{ path('app_user') }}">
-                        <i id="fa-users" class="fa-solid fa-users"></i>
-                    </a>
-                {% endif %}
-            </left>
-            <mid class="midNav">
-                <form action="{{ path('search_by_city') }}" method="get">
-                    <label for="city"></label>
-                    <input type="text" id="city" name="city" class="search-form-control" value="{{ app.request.query.get('city') }}" placeholder="WHERE ?"/>
-                    <button class="search-btn" type="submit">Search</button>
-                </form>
-            </mid>
-            <right class="rightNav">
-                <ul class="rightRightNav">
-                    <div class="burger-menu">
-                            <input type="checkbox" id="menu-toggle" class="menu-toggle">
-                            <label for="menu-toggle" class="menu-icon">
-                                <i class="fas fa-bars" style="color: #ffffff;"></i>
-                            </label>
-                        <ul class="dropdown-menu">
-                            {% if not app.user %}
-                                <li><a href="{{ path('app_login') }}">LOGIN</a></li>
-                                <li><a href="{{ path('app_register') }}">SIGN UP</a></li>
-                            {% else %}
-                                <li><a href="{{ path('app_logout') }}">LOGOUT</a></li>
-                            {% endif %}
-                            <li><a href="#">SERVICES</a></li>
-                            <li><a href="#">CONTACT</a></li>
-                        </ul>
-                    </div>
-
-                    {% if app.user %}
+    <body>
+        <header>
+            <nav class="navbar">
+                <left class="leftNav">
+                    <h1 ><a class="brand" href="{{ path('app_home') }}">CryptoNest</a></h1>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_user') }}">
+                            <i id="fa-users" class="fa-solid fa-users"></i>
+                        </a>
+                    {% endif %}
+                </left>
+                <mid class="midNav">
+                    <form action="{{ path('search_by_city') }}" method="get">
+                        <label for="city"></label>
+                        <input type="text" id="city" name="city" class="search-form-control" value="{{ app.request.query.get('city') }}" placeholder="WHERE ?"/>
+                        <button class="search-btn" type="submit">Search</button>
+                    </form>
+                </mid>
+                <right class="rightNav">
+                    <ul class="rightRightNav">
                         <div class="burger-menu">
-                            <input type="checkbox" id="user-toggle" class="menu-toggle">
-                            <label for="user-toggle" class="menu-icon">
-                                <i class="fa-regular fa-user"></i>
-                            </label>
+                                <input type="checkbox" id="menu-toggle" class="menu-toggle">
+                                <label for="menu-toggle" class="menu-icon">
+                                    <i class="fas fa-bars" style="color: #ffffff;"></i>
+                                </label>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ path('show_user', {'id': app.user.id}) }}">MY PROFILE</a></li>
-                                {% if app.user.bookings is not empty %}
-                                    <li><a href="{{ path('app_booking') }}">MY RESERVATIONS</a></li>
+                                {% if not app.user %}
+                                    <li><a href="{{ path('app_login') }}">LOGIN</a></li>
+                                    <li><a href="{{ path('app_register') }}">SIGN UP</a></li>
+                                {% else %}
+                                    <li><a href="{{ path('app_logout') }}">LOGOUT</a></li>
                                 {% endif %}
-                                {% if app.user.properties is not empty %}
-                                    <li><a href="{{ path('app_property') }}">MY PROPERTIES</a></li>
-                                {% endif %}
-                                <li><a href="{{ path('new_property') }}">HOST</a></li>
-                                <li><a href="{{ path('app_logout') }}">LOGOUT</a></li>
+                                <li><a href="#">SERVICES</a></li>
+                                <li><a href="#">CONTACT</a></li>
                             </ul>
                         </div>
-                    {% endif %}
                     
-                    <div class="burger-menu">
-                        <input type="checkbox" id="globe-toggle" class="menu-toggle">
-                        <label for="globe-toggle" class="menu-icon">
-                            <i class="fa-solid fa-globe" style="color: #ffffff;"></i>
-                        </label>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">ENGLISH</a></li>
-                            <li><a href="#">FRENCH</a></li>
-                            <li><a href="#">GERMAN</a></li>
-                        </ul>
-                    </div>
-                </ul>
-            </right>    
-        </nav>
-    </header>
-    <body>
+                        {% if app.user %}
+                            <div class="burger-menu">
+                                <input type="checkbox" id="user-toggle" class="menu-toggle">
+                                <label for="user-toggle" class="menu-icon">
+                                    <i class="fa-regular fa-user"></i>
+                                </label>
+                                <ul class="dropdown-menu">
+                                    <li><a href="{{ path('show_user', {'id': app.user.id}) }}">MY PROFILE</a></li>
+                                    {% if app.user.bookings is not empty %}
+                                        <li><a href="{{ path('app_booking') }}">MY RESERVATIONS</a></li>
+                                    {% endif %}
+                                    {% if app.user.properties is not empty %}
+                                        <li><a href="{{ path('app_property') }}">MY PROPERTIES</a></li>
+                                    {% endif %}
+                                    <li><a href="{{ path('new_property') }}">HOST</a></li>
+                                    <li><a href="{{ path('app_logout') }}">LOGOUT</a></li>
+                                </ul>
+                            </div>
+                        {% endif %}
+                        
+                        <div class="burger-menu">
+                            <input type="checkbox" id="globe-toggle" class="menu-toggle">
+                            <label for="globe-toggle" class="menu-icon">
+                                <i class="fa-solid fa-globe" style="color: #ffffff;"></i>
+                            </label>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">ENGLISH</a></li>
+                                <li><a href="#">FRENCH</a></li>
+                                <li><a href="#">GERMAN</a></li>
+                            </ul>
+                        </div>
+                    </ul>
+                </right>    
+            </nav>
+        </header>
+    
         <main id="container-base">
             {% if not app.user %}
             <div></div>
@@ -92,14 +93,16 @@
             {% endblock %}
         </main>
 
+        <footer>
+            <div class="footerContainer">
+                <h2 class="footerTitle"><a class="brand" href="{{ path('app_home') }}">CryptoNest</a></h2>
+            </div>
+        </footer>
         {% block javascripts %}
             {# {% block importmap %}{{ importmap('app') }}{% endblock %} #}
             <script src="{{ asset('js/script.js') }}"></script>
+            <script src="{{ asset('js/feedback.js') }}"></script>
+            <script src="{{ asset('js/countdown.js') }}"></script>
         {% endblock %}
     </body>
-    <footer>
-        <div class="footerContainer">
-            <h2 class="footerTitle">CryptoNest</h2>
-        </div>
-    </footer>
 </html>
