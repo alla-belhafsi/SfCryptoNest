@@ -1,11 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Quicksand:wght@300..700&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Oswald", sans-serif;
-}
+/* ======================== PROPERTY ======================== */
 
 .first-part-property {
     display: block;
@@ -25,7 +18,14 @@
     gap: 70px;
 }
 
-/* ========================property/show========================= */
+.third-part-property {
+    margin-top: 70px;
+}
+.third-part-property h3 {
+    margin-bottom: 30px;
+}
+
+/* ============= property/show ============== */
 
 .property-cover-card {
     box-shadow: rgba(68, 117, 196, 0.548) 0px 13px 27px -5px, rgba(68, 117, 196, 0.548) 0px 8px 16px -8px;
@@ -267,6 +267,9 @@
         gap: 5px;
     }
     
+    .third-part-property {
+        margin-top: 20px;
+    }
 
     /*================ REFERENCE =================*/
 
@@ -293,6 +296,9 @@
         gap: 5px;
     }
     
+    .third-part-property {
+        margin-top: 20px;
+    }
 
     /*================ REFERENCE =================*/
 
@@ -319,6 +325,9 @@
         gap: 5px;
     }
     
+    .third-part-property {
+        margin-top: 20px;
+    }
 
     /*================ REFERENCE =================*/
 
@@ -345,6 +354,9 @@
         gap: 5px;
     }
     
+    .third-part-property {
+        margin-top: 20px;
+    }
 
     /*================ REFERENCE =================*/
 
@@ -371,6 +383,9 @@
         gap: 5px;
     }
     
+    .third-part-property {
+        margin-top: 20px;
+    }
 
     /*================ REFERENCE =================*/
 
@@ -388,14 +403,9 @@
     
 
     /*================ REFERENCE =================*/
-    /* .property-icons {
-        flex-direction: row;
+    .third-part-property {
+        margin-top: 20px;
     }
-
-    .property-param {
-        flex-direction: column;
-        gap: 5px;
-    } */
     
 
     /*================ REFERENCE =================*/
@@ -410,11 +420,13 @@
     
 }
 
-@media screen and (min-width: 1024px) and (max-width: 1245px) {
+@media screen and (min-width: 1024px) and (max-width: 1280px) {
     
 
     /*================ REFERENCE =================*/
-    
+    .third-part-property {
+        margin-top: 20px;
+    }
 
     /*================ REFERENCE =================*/
 

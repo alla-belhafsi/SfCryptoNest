@@ -1,123 +1,78 @@
-/* ======================== USER ========================= */
+/* ================== BOOKING ======================== */
 
-.user-card {
+.feedback-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-block: 15px;
+    gap: 20px;
+}
+
+.feedback-card {
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -20px;
-    background-color: #aaaaaa;
-    border-radius: 10px;
-    width: fit-content;
+    background-color: #fff;
+    border: 1px solid #AD8D29;
+    border-radius: 5px;
+    width: 300px;
+    padding: 5px 20px 15px 20px;
     overflow: hidden;
     cursor: default;
 }
 
-.user-picture {
-    margin: 7px 20px 0px 5px;
-    /* margin-right: 20px;
-    margin-top: 7px; */
-    border-radius: 50%;
-    width: 75px;
-    height: 75px;
+
+/* ============= COMMENT ============= */
+
+.feedback-card p {
+    text-align:justify;
 }
 
-.user-info {
-    background-color: #505050;
-    color: #fff;
-    padding: 5px;
-    margin-block: 5px;
-    margin-right: 5px;
-    border-radius: 5px;
+.feedback-comment {
+    display: -webkit-box; 
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical; 
+    overflow: hidden;
 }
 
-.user-info-box {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    gap: 5px;
+
+/* ============== RATING ============== */
+
+.star-rating {
+    font-size: 24px;
 }
 
-.user-info-item {
-    display: inline-block;
-    text-align: center;
-    /* text-decoration: none;
-    color: #fff; */
-    border: 1px solid #000;
-    border-radius: 5px;
-    padding: 5px 15px;
-    width: 174px;
+.star {
+    cursor: pointer;
 }
 
-.completeName {
-    display: flex;
-    margin: 5px 10px;
-    gap: 10px;
+.star:hover,
+.star.rated {
+    color: orange;
 }
 
-.username {
-    text-align: center;
-    margin-right: 20px;
-    margin-left: 5px;
-}
+/* =============== TRAVELLER =============== */
 
-.user-table {
-    border-collapse: collapse;
-    padding-block: 5px;
-}
-
-.user-table td, .user-table th {
-    border: none;
-    padding-inline: 20px; 
-    padding-block: 7px;
-    font-weight: 600;
-}
-
-/* Style alternatif pour les lignes impaires et paires */
-.user-table tr:nth-child(odd) {
-    background: linear-gradient(45deg, #3498db, #e74c3c);
-}
-.user-table tr:nth-child(even) {
-    background: linear-gradient(45deg, #e74c3c, #3498db);
-}
-
-.UD-btn {
-    margin-left: 17px;
-}
-
-.material-symbols-outlined {
-    transition: 0.5s;
-}
-.material-symbols-outlined:hover {
-    transform: scale(1.2);
-}
-
-.user-role-checkbox {
-    display: inline-block;
-}
-
-.user-role-box {
-    display: inline-block;
-    cursor: default;
-    border: 1px solid #000;
-    align-content: center;
-    border-radius: 7px;
-    padding-inline: 5px;
-}
-
-.edit-btn {
-    text-decoration: none;
+.traveler-username {
     color: #000;
-}
-
-.delete-btn {
     text-decoration: none;
-    color: #000;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: color 0.3 ease-in-out;
 }
 
-.update-btn {
-    text-align: center;
-    color: #007bff;
-    font-size: 16px;
-    padding-inline: 5px;
-    margin-block: 15px;
+.traveler-username:hover {
+    color: #AD8D29;
 }
+
+.feedback-date {
+    position: absolute;
+    margin-left: 155px;
+    margin-top: -7px;
+    font-size: 14px;
+    font-style: italic;
+    color: dimgray;
+}
+
 
 /* =============== MOBILE VERSION ===================== */
 
@@ -132,7 +87,6 @@
     
     /*================ REFERENCE =================*/
 
-    
 
     /*================ REFERENCE =================*/
 
@@ -151,7 +105,6 @@
     
     /*================ REFERENCE =================*/
 
-    
 
     /*================ REFERENCE =================*/
 
@@ -170,7 +123,6 @@
     
     /*================ REFERENCE =================*/
 
-    
 
     /*================ REFERENCE =================*/
 
@@ -182,14 +134,12 @@
 
     /*================ REFERENCE =================*/
 
-    
 
     /*================ REFERENCE =================*/
 
     
     /*================ REFERENCE =================*/
 
-    
 
     /*================ REFERENCE =================*/
 
@@ -200,7 +150,6 @@
     
 
     /*================ REFERENCE =================*/
-
     
 
     /*================ REFERENCE =================*/
@@ -208,7 +157,6 @@
     
     /*================ REFERENCE =================*/
 
-    
 
     /*================ REFERENCE =================*/
 
@@ -219,7 +167,6 @@
     
 
     /*================ REFERENCE =================*/
-
     
 
     /*================ REFERENCE =================*/
@@ -227,7 +174,6 @@
     
     /*================ REFERENCE =================*/
 
-    
 
     /*================ REFERENCE =================*/
 
@@ -246,7 +192,6 @@
     
     /*================ REFERENCE =================*/
 
-    
 
     /*================ REFERENCE =================*/
 

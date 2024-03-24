@@ -1,12 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Quicksand:wght@300..700&display=swap');
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Oswald", sans-serif;
-}
-
 /* =================== BOOKING FORM ========================= */
 
 #calendrier {
@@ -166,44 +157,6 @@
     transform: scale(1.1);
 }
 
-/* ================== FEEDBACK ======================== */
-
-.feedback {
-    margin-top: 30px;
-}
-
-.star-rating {
-    font-size: 30px;
-}
-
-.star {
-    cursor: pointer;
-}
-
-.star:hover,
-.star.rated {
-    color: orange;
-}
-
-.feedback-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    width: 1200px;
-    margin-block: 15px;
-    gap: 15px;
-}
-
-.feedback-card {
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -20px;
-    background-color: #aaaaaa;
-    border-radius: 10px;
-    width: 270px;
-    padding-inline: 10px;
-    text-align: justify;
-    overflow: hidden;
-    cursor: default;
-}
 
 /* =============== MOBILE VERSION ===================== */
 
@@ -218,7 +171,6 @@
     
     /*================ REFERENCE =================*/
 
-    
 
     /*================ REFERENCE =================*/
 
@@ -238,7 +190,6 @@
     /*================ REFERENCE =================*/
 
     
-
     /*================ REFERENCE =================*/
 
     
@@ -257,7 +208,6 @@
     /*================ REFERENCE =================*/
 
     
-
     /*================ REFERENCE =================*/
 
     
@@ -277,7 +227,6 @@
     
     /*================ REFERENCE =================*/
 
-    
 
     /*================ REFERENCE =================*/
 
@@ -298,7 +247,6 @@
     
     /*================ REFERENCE =================*/
 
-    
 
     /*================ REFERENCE =================*/
 
@@ -320,7 +268,6 @@
     /*================ REFERENCE =================*/
 
     
-
     /*================ REFERENCE =================*/
 
     
@@ -338,7 +285,6 @@
     
     /*================ REFERENCE =================*/
 
-    
 
     /*================ REFERENCE =================*/
 
