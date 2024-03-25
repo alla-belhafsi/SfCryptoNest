@@ -8,16 +8,6 @@
     gap: 20px;
 }
 
-.feedback-card {
-    box-shadow: rgb(38, 57, 77) 0px 20px 30px -20px;
-    background-color: #fff;
-    border: 1px solid #AD8D29;
-    border-radius: 5px;
-    width: 300px;
-    padding: 5px 20px 15px 20px;
-    overflow: hidden;
-    cursor: default;
-}
 
 .feedback-form-card {
     display: flex;
@@ -34,6 +24,23 @@
     gap: 20px;
 }
 
+.feedback-card {
+    position: relative;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -20px;
+    background-color: #fff;
+    border: 1px solid #AD8D29;
+    border-radius: 5px;
+    width: 300px;
+    padding: 5px 20px 15px 20px;
+    overflow: hidden;
+    cursor: default;
+    height: 120px; 
+    transition: height 2s; 
+}
+.feedback-card:hover { 
+    border: 2px solid #AD8D29; 
+    height: fit-content;
+} 
 
 /* ============= COMMENT ============= */
 
@@ -46,13 +53,20 @@
     -webkit-line-clamp: 2; 
     -webkit-box-orient: vertical; 
     overflow: hidden;
+    text-overflow: ellipsis; /* Affiche les trois points de suspension */
+    cursor: pointer;
+}
+
+.feedback-card:hover .feedback-comment {
+    -webkit-line-clamp: unset; 
 }
 
 
 /* ============== RATING ============== */
 
 .star-rating {
-    font-size: 24px;
+    font-size: 22px;
+    margin-top: -10px;
 }
 
 .star {
@@ -64,9 +78,20 @@
     color: orange;
 }
 
+#average-rating {
+    font-size: 14px;
+}
+
+.fa-star {
+    color: #FFD43B;
+    font-size: 18px;
+}
+
 /* =============== TRAVELLER =============== */
 
 .traveler-username {
+    display: flex;
+    align-items: start;
     color: #000;
     text-decoration: none;
     cursor: pointer;
@@ -80,11 +105,23 @@
 }
 
 .feedback-date {
-    margin-left: 155px;
-    margin-top: -7px;
+    /* margin-left: 155px;
+    margin-top: -7px; */
     font-size: 14px;
     font-style: italic;
     color: dimgray;
+}
+
+.feedback-delete {
+    position: absolute;
+    bottom: -10px;
+    right: 0;
+    z-index: -1; 
+    transition: bottom 1s, right 1s;
+}
+.feedback-card:hover .feedback-delete {
+    bottom: 0px; 
+    z-index: 1; 
 }
 
 

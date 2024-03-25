@@ -93,6 +93,7 @@
     display: inline-flex;
     border-collapse: separate;
     border: 10px;
+    cursor: default;
 }
 
 .property-card:hover img{
@@ -105,7 +106,7 @@
 
 .property-card-header {
     height: 200px;
-    /* overflow: hidden; */
+    overflow: hidden;
     position: relative;
    
 }

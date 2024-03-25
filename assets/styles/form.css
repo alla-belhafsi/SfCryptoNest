@@ -123,6 +123,20 @@
     transform: scale(1.1); 
 }
 
+.not-a-member {
+    display: block;
+    color: #007bff;
+    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 5px;
+    transition: 0.3s;
+}
+
+.not-a-member:hover {
+    transform: scale(1.1);
+    color: #0056b3;
+}
+
 .btn {
     display: inline-block;
     background-color: #007bff;
