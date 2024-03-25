@@ -7,17 +7,21 @@
 {% block body %}
 
     <h2 class="title">{{ booking.property.title }}</h2>
+    {# Obtenir la date et l'heure actuelles #}
+    {% set now = "now"|date('Y-m-d H:i:s') %}
 
+    {# Obtenir les messages #}
     {% set messages = app.flashes %}
     {% for type, message in messages %}
         {% if type == 'success' %}
+            {# Affichage des messages de succès s'il y en a #}
             <div class="alert alert-success">
                 {{ message[0] }}
             </div>
         {% endif %}
     {% endfor %}
     
-    <!-- DESCRIPTION DE LA RESERVATION -->
+    {# DESCRIPTION DE LA RESERVATION #}
     <h3>Ready for the trip to {{ booking.property.city }}, in {{ booking.property.country }} !</h3>
     <table class="booking-table">
         <thead>
@@ -30,33 +34,36 @@
         </thead>
         <tbody>
             <tr class="tac">
-                <td>{{ booking.bookingDate | date('d/m/Y') }}</td>
+                {# Affichage des détails de la réservation #}
+                <td>{{ booking.bookingDate|date('d/m/Y') }}</td>
                 <td>{{ booking.id }}</td>
-                <td>{{ booking.startDate | date('d/m/Y') }}</td>
-                <td>{{ booking.endDate | date('d/m/Y') }}</td>
+                <td>{{ booking.startDate|date('d/m/Y') }}</td>
+                <td>{{ booking.endDate|date('d/m/Y') }}</td>
                 <td>{{ booking.duration }}</td>
-                <td colspan="3">{{ booking.amount | number_format(2, ',') }} &euro;</td>
+                <td>{{ booking.amount|number_format(2, ',') }} €</td>
             </tr>
         </tbody>
     </table>
 
+    {# Message de bienvenue pour le voyageur #}
     <h4 class="welcome-booking">
         Welcome to your home away from home! Your delightful accommodation awaits you starting from {{ booking.startDate | date('d/m/Y') }} at <span class="checkin-highlight">{{ booking.property.checkIn|date("H:i") }}</span> in the afternoon. As your journey with us concludes on {{ booking.endDate | date('d/m/Y') }} at <span class="checkout-highlight">{{ booking.property.checkOut|date("H:i") }}</span> in the morning, we bid you farewell until next time. Enjoy your stay!
     </h4>
 
-    <!-- DESCRIPTION DE ADRESSE DE L'HÉBERGEMENT ET L'HÔTE -->
-
+    {# DESCRIPTION DE L'HÔTE ET L'ADRESSE DE L'HÉBERGEMENT #}
     <div class="property-details">
 
-        <!-- IMAGE DE L'ANNONCE RESERVÉE AVEC COUNTDOWN -->
+        {# Affichage de l'image de l'annonce réservée avec compte à rebours pour indiquer le temps restant avant le début du séjour #}
         <div id="countdown" class="booking-cover-property" data-start-date="{{ booking.startDate|date('d/m/Y') }}" data-checkin-time="{{ booking.property.checkIn|date('H:i') }}">
+
             <img src="{{ asset (booking.property.cover) }}" alt="Image de {{ booking.property.title }}">
             <div id="countdownText_{{ booking.id }}" class="cd-text cd-style2"></div>
+
         </div>
 
         <div class="booking-infos">
 
-            <!-- DESCRIPTION DE L'ADRESSE -->
+            {# DESCRIPTION DE L'ADRESSE #}
             <div class="booking-location">
                 <p><strong>Address:</strong> {{ booking.property.address }}</p>
                 <p><strong>City:</strong> {{ booking.property.city }}</p>
@@ -64,19 +71,26 @@
                 <p><strong>Country:</strong> {{ booking.property.country }}</p>
             </div>
 
-            <!-- DESCRIPTION DE L'HÔTE -->
+            {# DESCRIPTION DE L'HÔTE #}
             <div class="booking-location">
-                <p><strong>Your host:</strong> <a class="link-to-host" href="{{ path('show_user', {'id': booking.property.user.id}) }}">{{booking.property.user.username}}</a></p>
-                <p><strong>Accommodations:</strong> {{ booking.property.user.properties | length }} {{ booking.property.user.properties | length == 1 ? 'property' : 'properties' }}</p>
-                <p><strong>Member since:</strong> {{ booking.property.user.createdAt|date('M Y') }}</p>
+                {# Affichage du username de l'hébergeur #}
+                <p>
+                    <strong>Your host:</strong> <a class="link-to-host" href="{{ path('show_user', {'id': booking.property.user.id}) }}">{{booking.property.user.username}}</a>
+                </p>
+                {# Affichage du nombre d'hébergement publier par l'hébergeur #}
+                <p>
+                    <strong>Accommodations:</strong> {{ booking.property.user.properties|length }} {{ booking.property.user.properties|length == 1 ? 'property' : 'properties' }}
+                </p>
 
                 {# Vérifie si la date d'adhésion de l'utilisateur est antérieure à un an avant la date actuelle #}
-                {# {% if currentDate >= endDate %}
-                    <p><strong>Member since:</strong> {{ diffYears }} {{ diffYears > 1 ? 'years' : 'year' }}</p>
+                {% if now >= booking.user.createdAt|date_modify('-1 year') %}
+                    <p><strong>With us since:</strong> {{ booking.user.createdAt|date('M Y') }}</p>
                 {% else %}
-                    <p><strong>Member since:</strong> {{ booking.property.user.createdAt|date('M Y') }}</p>
-                {% endif %} #}
+                    {% set yearsSinceCreation = "now"|date('Y') - booking.user.createdAt|date('Y') %}
+                    <p><strong>Member for:</strong> {{ yearsSinceCreation }} {{ yearsSinceCreation == 1 ? 'year' : 'years' }}</p>
+                {% endif %}
                 
+                {# Bouton pour envoyer un message à l'hôte #}
                 <div>
                     <h4 class="tac">
                         <a href="" class="msg-btn">Send a message</a>
@@ -85,24 +99,17 @@
             </div>
 
         </div>
+
     </div>
 
-    <!-- AFFICHAGE DU COMMENTAIRE OU DU FORMULAIRE D'AVIS SUR L'ANNONCE (qui ne peut être affiché qu'après que le séjour soit fini) -->
+    {# AFFICHAGE DU COMMENTAIRE OU DU FORMULAIRE D'AVIS SUR L'ANNONCE (qui ne peut être affiché qu'après que le séjour soit fini) #}
     <div class="feedback tac">
-        {# Obtenez la date de début du compte à rebours à partir de l'attribut de données #}
+
+        {# Calcul du temps écoulé depuis la fin du séjour pour afficher le formulaire de commentaire #}
         {% set endDateStr = booking.endDate|date('Y-m-d') ~ ' ' ~ booking.property.checkOut|date('H:i') %}
         {% set endDate = endDateStr|date('Y-m-d H:i:s') %}
 
-        {# Obtenez la date et l'heure actuelles #}
-        {% set now = "now"|date('Y-m-d H:i:s') %}
-
-        {# Calcul de la différence entre maintenant et la date de fin #}
-        {% set distance = endDate|date_modify('now') %}
-
-        {# Condition pour que le formulaire ne s'affiche qu'après la fin du séjour #}
-        {# Si la date d'aujourd'hui (date()) est supérieur à la date de fin de la réservation (date(booking.endDate) alors ...#}
-        {# {% if date() > booking.endDate %} #}
-        {# Si la distance est négative, cela signifie que le compte à rebours est terminé #}
+        {# Affichage du formulaire de commentaire si le séjour est terminé #}
         {% if now >= endDate %}
             <h3 class="tac">Your feedback matters !</h3>
             {{ form_start(formAddFeedback) }}
@@ -110,6 +117,7 @@
                     <div class="feedback-form-card">
                         <div class="form-col">
                             {{ form_label(formAddFeedback.rating, 'Rating') }}
+                            {# Sélection de la note avec des étoiles #}
                             <div class="star-rating" id="star-rating">
                                 <span class="star" data-rating="1">&#9733;</span>
                                 <span class="star" data-rating="2">&#9733;</span>
@@ -128,87 +136,62 @@
                 </div>
                 {{ form_errors(formAddFeedback) }}
             {{ form_end(formAddFeedback) }}
+        {# Sinon, s'il y a des commentaires pour cet hébergement, affichage des commentaires des voyageurs #}
         {% elseif booking.property.feedback is not empty %}
-            <h3>Travelers' Experiences</h3>
+            <h3>Your Experience</h3>
             <div class="feedback-container">
+                {# Boucle pour récupérer les commentaires laissés par les utilisateurs ayant séjourné dans l'hébergement #}
                 {% for feedback in booking.property.feedback %}
-                    <div class="feedback-card">
-                        {# Affichage de la date de publication du commentaire #}
-                        <p class="feedback-date">{{ feedback.createdAt|date('d/m/Y H:i') }}</p>
-                        <div class="space-between">
-                            {# Affichage de la date de publication du commentaire #}
-                            <a href="" class="traveler-username">{{ feedback.user.username }}</a>
-                            <div class="star-rating">
-                                {% for i in 1..5 %}
-                                    {% if i >= feedback.rating %}
-                                        <span class="star rated">&#9733;</span>
-                                    {% else %}
-                                        <span>&#9733;</span>
-                                    {% endif %}
-                                {% endfor %}
+                    {# Filtrer ceux appartenant à l'utilisateur actuel #}
+                    {% if feedback.user == booking.user %}
+                        <div class="feedback-card">
+
+                            <div class="space-between">
+                                {# Affichage de la date de publication du commentaire #}
+                                <p class="feedback-date">{{ feedback.createdAt|date('d/m/Y H:i') }}</p>
+
+                                {# Affichage de la note de l'hébergement (séjour) laissée par le voyageur #}
+                                <div class="star-rating">
+                                    <span id="average-rating">{{ feedback.rating|number_format(1, ',') }}</span>
+                                    {# Boucle pour déterminer l'affichage des étoiles en parcourant de 1 à 5 inclusivement #}
+                                    {% for i in 1..5 %}
+                                        {# Vérifie si la valeur actuelle de l'itérateur i est inférieure ou égale à la note #}
+                                        {% if i <= feedback.rating %}
+                                            {# Si la note est supérieure ou égale à i, afficher une étoile pleine #}
+                                            <span class="star rated">&#9733;</span>
+                                        {% else %}
+                                            {# Sinon, afficher une étoile vide #}
+                                            <span>&#9733;</span>
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
                             </div>
+
+                            {# Affichage du nom d'utilisateur du voyageur #}
+                            <a href="" class="traveler-username">{{ feedback.user.username }}</a>
+
+                            {# Affichage du contenu du commentaire #}
+                            <p class="feedback-comment">{{ feedback.comment }}</p>
+
+                            <div class="feedback-delete">
+                                <a class="delete-btn" href="{{ path('delete_feedback', {'id': feedback.id}) }}">
+                                    <span class="material-symbols-outlined">delete</span>
+                                </a>
+                            </div>
+                            
                         </div>
-                        {# <p>{{ feedback.comment|split(" ")|slice(0, 15)|join(" ") }}...</p> #}
-                        {# <p style="display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">{{ feedback.comment }}</p> #}
-                        {# Affichage du contenu du commentaire #}
-                        <p class="feedback-comment">{{ feedback.comment }}</p>
-                        {# <a class="delete-btn" href="{{ path('delete_feedback', {'id': feedback.id}) }}"><span class="material-symbols-outlined">delete</span></a> #}
-                    </div>
+                    {% endif %}
                 {% endfor %}
             </div>
+
+        {# Si aucune condition précédente n'est remplie #}
         {% else %}
+            {# Afficher un message indiquant que un commentaire peut être laissé seulement à la fin du séjour #}
             <div class="host-container tac">
                 <p>You can only leave a review at the end of your stay !</p>
             </div>
         {% endif %}
-    </div>
 
-    {# {% block javascripts %} #}
-        {# <script src="{{ asset('js/feedback.js') }}"></script>
-        <script src="{{ asset('js/countdown.js') }}"></script> #}
-        {# <script>
-            // Obtenez la date de début à partir de l'attribut de données
-            var startDateStr = document.getElementById("countdown").getAttribute("data-start-date");
-                
-            // Convertissez la chaîne de date en un objet Date JavaScript
-            var startDateParts = startDateStr.split('/');
-            var startDate = new Date(startDateParts[2], startDateParts[1] - 1, startDateParts[0]);
-                
-            // Obtenez l'heure de check-in à partir de l'attribut de données
-            var checkinTime = document.getElementById("countdown").getAttribute("data-checkin-time");
-            var checkinHours = parseInt(checkinTime.split(':')[0]);
-            var checkinMinutes = parseInt(checkinTime.split(':')[1]);
-                
-            // Ajoutez l'heure de check-in à la date de début
-            startDate.setHours(checkinHours);
-            startDate.setMinutes(checkinMinutes);
-            startDate.setSeconds(0); // Assurez-vous de régler les secondes à zéro pour éviter les imprécisions
-                
-            // Mettez à jour le compte à rebours chaque seconde
-            var x = setInterval(function() {
-            
-              // Obtenez la date et l'heure actuelles
-              var now = new Date().getTime();
-            
-              // Trouvez la distance entre maintenant et la date de début
-              var distance = startDate - now;
-            
-              // Calculs de temps pour jours, heures, minutes et secondes
-              var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-              var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-              var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-              var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            
-              // Affichez le résultat dans l'élément avec id="countdownText"
-              document.getElementById("countdownText").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
-            
-              // Si le compte à rebours est terminé, écrivez un texte
-              if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("countdownText").innerHTML = "ENJOY YOUR STAY !";
-              }
-            }, 1000);
-        </script> #}
-    {# {% endblock %} #}
+    </div>
 
 {% endblock %}

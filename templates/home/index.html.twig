@@ -29,17 +29,32 @@
                     </div>
 
                     <div class="property-card-text">
-                        <h3>{{ property.title }}</h3>
+
+                        <div class="space-between">
+                            <h3>{{ property.title }}</h3>
+                            {# Vérifiez d'abord si la propriété a des commentaires #}
+                            {% if property.feedback|length > 0 %}
+                                {# Utilisation de la méthode getAverageRating() pour obtenir la moyenne #}
+                                {% set averageRating = property.getAverageRating() %}
+                                    {# Affichez la moyenne des notes #}
+                                    <div class="star-rating">
+                                        <span id="average-rating">{{ averageRating|number_format(1, ',') }}</span>
+                                        {# <span class="star">&#9733;</span> #}
+                                        <i class="fa-regular fa-star"></i>
+                                        {# <i class="fa-solid fa-ranking-star fa-sm" style="color: #FFD43B;"></i> #}
+                                    </div>
+                            {% endif %}
+                        </div>
 
                         {# 
                            - SPLIT le contenu de "property.content" en une liste de mots en utilisant l'espace comme délimiteur, 
                            - SLICE sélectionne les 17 premiers mots du contenu 
                            - JOIN rejoint les 17 mots sélectionnés en les séparant par des espaces. 
                         #}
-                        <p>{{ property.content|split(" ")|slice(0, 15)|join(" ") }}...</p>
-
-                        <strong>{{ property.price }} € per day</strong>
+                        {# <p>{{ property.content|split(" ")|slice(0, 15)|join(" ") }}...</p> #}
+                            
                     </div>
+                    <p class="tac"><strong>{{ property.price }} €</strong> night</p>
 
                 </div>
             {% endfor %}

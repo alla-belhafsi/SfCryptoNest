@@ -3,9 +3,11 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
-
+    {# Vérifie si l'utilisateur n'est pas connecté #}
     {% if not app.user %}
+        {# Formulaire de connexion #}
         <form method="post">
+            {# Affiche un message d'erreur en cas d'erreur d'authentification #}
             {% if error %}
                 <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
             {% endif %}
@@ -21,7 +23,10 @@
                 </div>
             </div>
             <div class="tac">
+                {# Lien pour réinitialiser le mot de passe #}
                 <a class="forgot-password" href="{{ path('app_forgot_password_request') }}">Forgot Password ?</a>
+                {# Lien pour continuer avec l'inscription #}
+                <a class="not-a-member" href="{{ path('app_register') }}">Not a member ?</a>
             </div>   
         
             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
@@ -31,10 +36,11 @@
                 </button>
             </div>
         </form>
-        {% else %}
+    {% else %}
+        {# Si l'utilisateur est connecté, affichage d'un message de bienvenue #}
         <div>
             {# <strong><p class="mt-5">Congratulations! Your email has been successfully confirmed. Welcome to our community!</p></strong> #}
-
+        
             <p>You are logged in as {{ app.user.email }}</p>
         </div>
     

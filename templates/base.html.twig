@@ -3,77 +3,109 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        {# Favicon #}
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>CN</text></svg>">
         {% block stylesheets %}
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-        {% for stylesheet in ['app.css', 'home.css', 'property.css', 'booking.css', 'user.css', 'form.css', 'feedback.css'] %}
-            <link rel="stylesheet" href="{{ asset('styles/' ~ stylesheet) }}"/>
-        {% endfor %}
+            {# Font Awesome #}
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+            {# Google Fonts #}
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+            {# Feuilles de style personnalisées #}
+            {% for stylesheet in ['app.css', 'home.css', 'property.css', 'booking.css', 'user.css', 'form.css', 'feedback.css'] %}
+                <link rel="stylesheet" href="{{ asset('styles/' ~ stylesheet) }}"/>
+            {% endfor %}
         {% endblock %}
     </head>
     <body>
+        {# En-tête  #}
         <header>
+            {# Barre de navigation #}
             <nav class="navbar">
+                {# Section gauche de la barre de navigation #}
                 <left class="leftNav">
                     <h1 ><a class="brand" href="{{ path('app_home') }}">CryptoNest</a></h1>
+                    {# Si l'utilisateur a le rôle d'administrateur #}
                     {% if is_granted('ROLE_ADMIN') %}
+                        {# Affiche un lien vers la page de la liste des utilisateurs avec une icône d'utilisateurs #}
                         <a href="{{ path('app_user') }}">
                             <i id="fa-users" class="fa-solid fa-users"></i>
                         </a>
                     {% endif %}
                 </left>
+                {# Section centrale de la barre de navigation #}
                 <mid class="midNav">
+                    {# Formulaire de recherche par ville #}
                     <form action="{{ path('search_by_city') }}" method="get">
+                        {# Label et Champ de saisie de la ville #}
                         <label for="city"></label>
                         <input type="text" id="city" name="city" class="search-form-control" value="{{ app.request.query.get('city') }}" placeholder="WHERE ?"/>
+                        {# Bouton de recherche #}
                         <button class="search-btn" type="submit">Search</button>
                     </form>
                 </mid>
+                {# Section droite de la barre de navigation #}
                 <right class="rightNav">
                     <ul class="rightRightNav">
+                        {# Menu burger #}
                         <div class="burger-menu">
-                                <input type="checkbox" id="menu-toggle" class="menu-toggle">
-                                <label for="menu-toggle" class="menu-icon">
-                                    <i class="fas fa-bars" style="color: #ffffff;"></i>
-                                </label>
+                            {# Checkbox pour activer/désactiver le menu #}
+                            <input type="checkbox" id="menu-toggle" class="menu-toggle">
+                            {# Libellé de la checkbox pour le style #}
+                            <label for="menu-toggle" class="menu-icon">
+                                {# Icône représentant le menu (trois barres) #}
+                                <i class="fas fa-bars" style="color: #ffffff;"></i>
+                            </label>
+                            {# Menu déroulant #}
                             <ul class="dropdown-menu">
+                                {# Si l'utilisateur n'est pas connecté #}
                                 {% if not app.user %}
+                                    {# Affiche un lien vers la page de connexion #}
                                     <li><a href="{{ path('app_login') }}">LOGIN</a></li>
+                                    {# Affiche un lien vers la page d'inscription #}
                                     <li><a href="{{ path('app_register') }}">SIGN UP</a></li>
-                                {% else %}
-                                    <li><a href="{{ path('app_logout') }}">LOGOUT</a></li>
                                 {% endif %}
-                                <li><a href="#">SERVICES</a></li>
+                                {# Affiche un lien pour proposer son hébergement #}
+                                <li><a href="{{ path('new_property') }}">HOST</a></li>
+                                {# Lien vers la page de contact #}
                                 <li><a href="#">CONTACT</a></li>
                             </ul>
                         </div>
-                    
+                        {# Menu utilisateur déroulant #}
                         {% if app.user %}
                             <div class="burger-menu">
+                                {# Checkbox pour activer/désactiver le menu #}
                                 <input type="checkbox" id="user-toggle" class="menu-toggle">
                                 <label for="user-toggle" class="menu-icon">
+                                    {# Icône représentant un Utilisateur #}
                                     <i class="fa-regular fa-user"></i>
                                 </label>
                                 <ul class="dropdown-menu">
+                                    {# Lien vers la page du profil de l'utilisateur #}
                                     <li><a href="{{ path('show_user', {'id': app.user.id}) }}">MY PROFILE</a></li>
-                                    {% if app.user.bookings is not empty %}
-                                        <li><a href="{{ path('app_booking') }}">MY RESERVATIONS</a></li>
+                                    {# Si l'utilisateur à au moins une réservation #}
+                                    {% if app.user.bookings|length > 0 %}
+                                        {# Affiche un lien "My Reservation" ou "My Reservations" selon le nombre de réservations #}
+                                        <li><a href="{{ path('app_booking') }}">{{ app.user.properties|length == 1 ? 'MY RESERVATION' : 'MY RESERVATIONS' }}</a></li>
                                     {% endif %}
-                                    {% if app.user.properties is not empty %}
-                                        <li><a href="{{ path('app_property') }}">MY PROPERTIES</a></li>
+                                    {# Si l'utilisateur a publié au moins un hébergement #}
+                                    {% if app.user.properties|length > 0 %}
+                                        {# Affiche un lien "My Property" ou "My Properties" selon le nombre d'hébergements #}
+                                        <li><a href="{{ path('app_property') }}">{{ app.user.properties|length == 1 ? 'MY PROPERTY' : 'MY PROPERTIES' }}</a></li>
                                     {% endif %}
-                                    <li><a href="{{ path('new_property') }}">HOST</a></li>
+                                    {# Affiche un lien pour se déconnecter #}
                                     <li><a href="{{ path('app_logout') }}">LOGOUT</a></li>
                                 </ul>
                             </div>
                         {% endif %}
-                        
+                        {# Menu de sélection de la langue déroulant #}
                         <div class="burger-menu">
+                            {# Checkbox pour activer/désactiver le menu #}
                             <input type="checkbox" id="globe-toggle" class="menu-toggle">
                             <label for="globe-toggle" class="menu-icon">
+                                {# Icône représentant le globe #}
                                 <i class="fa-solid fa-globe" style="color: #ffffff;"></i>
                             </label>
+                            {# Liste déroulante pour choisir la langue #}
                             <ul class="dropdown-menu">
                                 <li><a href="#">ENGLISH</a></li>
                                 <li><a href="#">FRENCH</a></li>
@@ -84,25 +116,24 @@
                 </right>    
             </nav>
         </header>
-    
+        {# Contenu principal #}
         <main id="container-base">
-            {% if not app.user %}
-            <div></div>
-            {% endif %}
             {% block body %}
             {% endblock %}
         </main>
-
+        {# Pied de page #}
         <footer>
             <div class="footerContainer">
                 <h2 class="footerTitle"><a class="brand" href="{{ path('app_home') }}">CryptoNest</a></h2>
             </div>
         </footer>
+        {# JavaScript #}
         {% block javascripts %}
+            {# Inclure les fichiers JavaScript personnalisés #}
+            {% for script in ['script.js', 'feedback.js', 'countdown.js'] %}
+            <script src="{{ asset('js/' ~ script) }}"></script>
+            {% endfor %}
             {# {% block importmap %}{{ importmap('app') }}{% endblock %} #}
-            <script src="{{ asset('js/script.js') }}"></script>
-            <script src="{{ asset('js/feedback.js') }}"></script>
-            <script src="{{ asset('js/countdown.js') }}"></script>
         {% endblock %}
     </body>
 </html>

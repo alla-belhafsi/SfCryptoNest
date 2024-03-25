@@ -60,39 +60,45 @@
     <div class="third-part-property">
         <h3 class="tac">Traveler Experiences</h3>
         <div class="feedback-container tac">
-            {# Si l'annonce comporte des commentaires #}
+            {# Sinon, s'il y a des commentaires pour cet hébergement, affichage des commentaires des voyageurs #}
             {% if property.feedback is not empty %}
                 {# Boucle pour afficher les commentaires laissés par les utilisateurs ayant séjourné dans l'hébergement #}
                 {% for feedback in property.feedback %}
                     <div class="feedback-card">
-                        {# Affichage de la date de publication du commentaire #}
-                        <p class="feedback-date">{{ feedback.createdAt|date('d/m/Y H:i') }}</p>
                         <div class="space-between">
                             {# Affichage de la date de publication du commentaire #}
-                            <a href="" class="traveler-username">{{ feedback.user.username }}</a>
-                            {# Affichage de la note de l'hébergement (séjour) #}
+                            <p class="feedback-date">{{ feedback.createdAt|date('d/m/Y H:i') }}</p>
+                            
+                            {# Affichage de la note de l'hébergement (séjour) laissée par les voyageurs #}
                             <div class="star-rating">
+                                <span id="average-rating">{{ feedback.rating|number_format(1, ',') }}</span>
                                 {# Boucle pour déterminer l'affichage des étoiles en parcourant de 1 à 5 inclusivement #}
                                 {% for i in 1..5 %}
                                     {# Vérifie si la valeur actuelle de l'itérateur i est inférieure ou égale à la note #}
                                     {% if i <= feedback.rating %}
-                                        {# Affichage d'une étoile pleine #}
+                                        {# Si la note est supérieure ou égale à i, afficher une étoile pleine #}
                                         <span class="star rated">&#9733;</span>
                                     {% else %}
-                                        {# Affichage d'une étoile vide #}
+                                        {# Sinon, afficher une étoile vide #}
                                         <span>&#9733;</span>
                                     {% endif %}
                                 {% endfor %}
                             </div>
                         </div>
+                        {# Affichage du username du voyageur #}
+                        <a href="" class="traveler-username">{{ feedback.user.username }}</a>
                         {# Affichage du contenu du commentaire #}
                         <p class="feedback-comment">{{ feedback.comment }}</p>
 
-                        {# <a class="delete-btn" href="{{ path('delete_feedback', {'id': feedback.id}) }}"><span class="material-symbols-outlined">delete</span></a> #}
+                        <div class="feedback-delete">
+                            <a class="delete-btn" href="{{ path('delete_feedback', {'id': feedback.id}) }}">
+                                <span class="material-symbols-outlined">delete</span>
+                            </a>
+                        </div>
                     </div>
                 {% endfor %}
             {% else %}
-            {# Affichage d'un texte si il n'y a pas de commentaire #}
+            {# Sinon afficher qu'il n'y a pas de commentaire encore #}
             <p><strong>No feedbacks (yet)</strong></p>
             {% endif %}
         </div>
