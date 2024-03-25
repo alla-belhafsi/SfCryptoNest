@@ -70,6 +70,18 @@ class Property
         $this->feedback = new ArrayCollection();
     }
 
+    public function getAverageRating(): ?float
+    {
+        $totalRating = 0;
+        $totalFeedbacks = count($this->feedback);
+
+        foreach ($this->feedback as $feedback) {
+            $totalRating += $feedback->getRating();
+        }
+
+        return $totalFeedbacks > 0 ? $totalRating / $totalFeedbacks : null;
+    }
+
     public function getNotAvailableDays(){
         $notAvailableDays = [];
     

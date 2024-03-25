@@ -21,6 +21,17 @@ class PropertyRepository extends ServiceEntityRepository
         parent::__construct($registry, Property::class);
     }
 
+    public function getAverageRating(Property $property): ?float
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('AVG(f.rating) as average_rating')
+            ->join('p.feedbacks', 'f')
+            ->where('p = :property')
+            ->setParameter('property', $property);
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     //    /**
     //     * @return Property[] Returns an array of Property objects
     //     */

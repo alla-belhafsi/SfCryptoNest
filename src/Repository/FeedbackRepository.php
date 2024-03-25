@@ -21,6 +21,18 @@ class FeedbackRepository extends ServiceEntityRepository
         parent::__construct($registry, Feedback::class);
     }
 
+    /**
+     * Calculate the average rating for all feedbacks
+     * @return float|null Average rating or null if no feedbacks exist
+     */
+    public function calculateAverageRating(): ?float
+    {
+        $qb = $this->createQueryBuilder('f')
+            ->select('AVG(f.rating) as average_rating');
+
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
     //    /**
     //     * @return Feedback[] Returns an array of Feedback objects
     //     */
