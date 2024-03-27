@@ -69,7 +69,31 @@
                     <div class="form-col-sm">
                         {{ form_row(formAddProperty.country) }}
                     </div>
+                    
                 </div>
+            </div>
+        </div>
+        <div class="host-container tac">
+            <div class="host-container1">
+                {% for imageForm in formAddProperty.images %}
+                    <div class="form-col-sm">
+                        {{ form_row(imageForm.url) }}
+                    </div>
+                    <div class="form-col-sm">
+                        {{ form_row(imageForm.caption) }}
+                    </div>
+                {% endfor %}
+                
+                {# Prototype (individuel) #}
+                <div id="images-container" class="row" style="display: none;">
+                    <div class="image" data-prototype-image-url="{{ form_row(formAddProperty.images.vars.prototype.url)|e }}">
+                    </div>
+                    <div class="image" data-prototype-image-caption="{{ form_row(formAddProperty.images.vars.prototype.caption)|e }}">
+                    </div>
+                </div>
+                <button id="btn" type="button" class="btn btn-success" onclick="addImageForm(this)">
+                    <i class="fas fa-plus"></i> Add a picture
+                </button>
             </div>
         </div>
         <div class="publish-btn">
@@ -79,4 +103,35 @@
         
         {{ form_errors(formAddProperty) }}
     {{ form_end(formAddProperty) }}
+    <script>
+        function addImageForm(button) {
+            var container = document.getElementById('images-container');
+            container.style.display = 'flex'; 
+        
+            // Récupérer les prototypes pour les champs module et nombreJours
+            var prototypeUrl = container.querySelector('.image[data-prototype-image-url]');
+            var prototypeCaption = container.querySelector('.image[data-prototype-image-caption]');
+        
+            // Nombre actuel de formulaires
+            var index = container.children.length;
+        
+            // Remplacer les placeholders dans les prototypes avec l'index actuel
+            var newFormUrl = prototypeUrl.getAttribute('data-prototype-image-url').replace(/__name__/g, index);
+            var newFormCaption = prototypeCaption.getAttribute('data-prototype-image-caption').replace(/__name__/g, index);
+        
+            // Créer un élément div pour le nouveau formulaire pour le champ module
+            var newFormDivUrl = document.createElement('div');
+            newFormDivUrl.innerHTML = newFormUrl;
+        
+            // Créer un élément div pour le nouveau formulaire pour le champ nombreJours
+            var newFormDivCaption = document.createElement('div');
+            newFormDivCaption.innerHTML = newFormCaption;
+        
+            // Ajouter le nouveau formulaire pour le champ module avant le bouton "Ajouter un programme"
+            container.appendChild(newFormDivUrl);
+        
+            // Ajouter le nouveau formulaire pour le champ nombreJours avant le bouton "Ajouter un programme"
+            container.appendChild(newFormDivCaption);
+        }
+    </script>
 {% endblock %}

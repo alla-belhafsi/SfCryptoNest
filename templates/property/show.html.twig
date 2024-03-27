@@ -11,7 +11,16 @@
     <div class="second-part-property">
         {# Affichage de l'image de couverture de l'hébergement #}
         <div class="property-cover-card">
-            <img src="{{ asset(property.cover) }}" alt="property.cover">
+            <div class="slider">
+                <button class="prev">&#10094;</button>
+                <div class="slides">
+                    <img src="{{ asset(property.cover) }}" alt="property.cover">
+                    {% for image in property.images %}
+                        <img id="slide-collection" src="{{ asset(image.url) }}" alt="{{ image.caption }}">
+                    {% endfor %}
+                </div>
+                <button class="next">&#10095;</button>
+            </div>
         </div>
         {# Affichage des icônes pour indiquer le check-in/check-out et le nombre de lits disponibles #}
         <div class="property-icons">
@@ -36,7 +45,7 @@
         <div class="property-info-side">
             <div class="property-card-box">
                 {# Affichage de l'adresse de l'hébergement #}
-                <strong class="property-card-localisation">{{ property.city }}, {{ property.country }}</strong>
+                <h5><strong>{{ property.city }}, {{ property.country }}</strong></h5>
                 {# Affichage du username de l'hébergeur #}
                 {% if property.user.username is not empty %}
                         <a class="bg-btn" href="">{{ property.user.username }}</a>
@@ -103,4 +112,27 @@
             {% endif %}
         </div>
     </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const prevBtn = document.querySelector(".prev");
+            const nextBtn = document.querySelector(".next");
+            const slides = document.querySelector(".slides");
+            const slideWidth = slides.clientWidth;
+            let currentIndex = 0;
+        
+            nextBtn.addEventListener("click", function() {
+                if (currentIndex < slides.children.length - 1) {
+                    currentIndex++;
+                    slides.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+                }
+            });
+        
+            prevBtn.addEventListener("click", function() {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    slides.style.transform = `translateX(-${currentIndex * slideWidth}px)`;
+                }
+            });
+        });        
+    </script>
 {% endblock %}

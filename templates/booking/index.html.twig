@@ -5,6 +5,17 @@
 {% block body %}
     <h2 class="title gold-text-stroke">MY RESERVATIONS</h2>
     
+    {# Obtenir les messages #}
+    {% set messages = app.flashes %}
+    {% for type, message in messages %}
+        {% if type == 'success' %}
+            {# Affichage des messages de succès s'il y en a #}
+            <div class="alert alert-success">
+                {{ message[0] }}
+            </div>
+        {% endif %}
+    {% endfor %}
+    
     <div class="home-container">
         {% for booking in bookings %}
             {% if booking.user.id == app.user.id %}

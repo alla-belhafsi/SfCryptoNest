@@ -31,7 +31,7 @@
                     <div class="property-card-text">
 
                         <div class="space-between">
-                            <h3>{{ property.title }}</h3>
+                            <h3 class="property-title">{{ property.title }}</h3>
                             {# Vérifiez d'abord si la propriété a des commentaires #}
                             {% if property.feedback|length > 0 %}
                                 {# Utilisation de la méthode getAverageRating() pour obtenir la moyenne #}

@@ -64,10 +64,14 @@ class Property
     #[ORM\OneToMany(targetEntity: Feedback::class, mappedBy: 'property')]
     private Collection $feedback;
 
+    #[ORM\OneToMany(targetEntity: Image::class, mappedBy: 'property', cascade: ["persist"])]
+    private Collection $images;
+
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
         $this->feedback = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
     public function getAverageRating(): ?float
@@ -332,6 +336,36 @@ class Property
             // set the owning side to null (unless already changed)
             if ($feedback->getProperty() === $this) {
                 $feedback->setProperty(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Image>
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Image $image): static
+    {
+        if (!$this->images->contains($image)) {
+            $this->images->add($image);
+            $image->setProperty($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Image $image): static
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getProperty() === $this) {
+                $image->setProperty(null);
             }
         }
 

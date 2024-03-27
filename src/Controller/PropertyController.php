@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Image;
 use App\Entity\Property;
 use App\Form\PropertyType;
 use App\Repository\PropertyRepository;
@@ -70,7 +71,7 @@ class PropertyController extends AbstractController
         
         // Si le formulaire n'a pas été soumis ou n'est pas valide, afficher le formulaire
         return $this->render('property/new.html.twig', [
-            'formAddProperty' => $form,
+            'formAddProperty' => $form->createView(),
             'edit' => $property->getId(),
             'property' => $property
         ]);

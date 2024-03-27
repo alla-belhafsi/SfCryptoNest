@@ -124,6 +124,12 @@ class BookingController extends AbstractController
         // Exécuter la suppression des données en base de données (Execute PDO)
         $entityManager->flush();
 
+        // addFlash() sert à notifier l'utilisateur de ce qui a été fait (param 1 = type de message, param 2 = message)
+        $this->addFlash(
+            'success',
+            "Your Reservation has been successfully deleted !"
+        );
+
         // Rediriger vers la liste des bookings après la suppression réussi
         return $this->redirectToRoute('app_booking');
     }

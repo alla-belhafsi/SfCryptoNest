@@ -43,6 +43,55 @@
     object-fit: cover;
 }
 
+.slider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    height: 300px;
+}
+
+.slides {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.slides img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    margin: auto;
+}
+
+button.prev, button.next {
+    position: absolute;
+    top: 50%;
+    background-color: rgba(37, 37, 37, 0.5);
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1;
+    border-radius: 50%;
+    padding: 0px 9px 3px 9px;
+    transition: left 0.5s ease, right 0.5s ease;
+}
+
+button.prev {
+    left: -30px;
+}
+button.next {
+    right: -30px;
+}
+.property-cover-card:hover button.prev {
+    left: 10px;
+}
+
+.property-cover-card:hover button.next {
+    right: 10px;
+}
+
 .property-content-card {
     text-align: justify;
     width: 400px; 
@@ -171,12 +220,17 @@
     padding: 0px 0px 5px 0px;
 }
 
+.property-title {
+    margin-left: 5px;
+}
+
 .property-card-text h3 {
     font-size: 16px;
     font-weight: 700;
     margin-bottom: 5px;
     cursor: default;
 }
+
 .my-property-localisation {
     display: flex;
     justify-content: center;

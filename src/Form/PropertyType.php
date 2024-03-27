@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 
 class PropertyType extends AbstractType
 {
@@ -92,11 +93,19 @@ class PropertyType extends AbstractType
             ])
             ->add('user', EntityType::class, [
                 'label' => false,
-                'class' => user::class,
+                'class' => User::class,
                 'choice_label' => 'id',
                 'attr' => [
                     'style' => 'display: none;',
                 ],
+            ])
+            ->add('images', CollectionType::class, [
+                'entry_type' => ImageType::class,
+                'entry_options' => ['label' => false],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+                'label' => false,
             ])
             ->add('publish', SubmitType::class, [
                 'attr' => [
@@ -114,11 +123,4 @@ class PropertyType extends AbstractType
             'user' => null, 
         ]);
     }
-    
-    // public function configureOptions(OptionsResolver $resolver): void
-    // {
-    //     $resolver->setDefaults([
-    //         'data_class' => Property::class,
-    //     ]);
-    // }
 }
