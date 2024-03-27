@@ -42,6 +42,7 @@ class PropertyType extends AbstractType
                 ]
             ])
             ->add('createdAt', DateTimeType::class, [
+                'widget' => 'single_text',
                 'label' => false,
                 'attr' => [
                     'style' => 'display: none;'

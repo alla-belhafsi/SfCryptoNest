@@ -5,10 +5,9 @@
 {% block title %}Reservation n°{{ booking.id }}{% endblock %}
 
 {% block body %}
+    <div class="booking-container">
 
     <h2 class="title">{{ booking.property.title }}</h2>
-    {# Obtenir la date et l'heure actuelles #}
-    {% set now = "now"|date('Y-m-d H:i:s') %}
 
     {# Obtenir les messages #}
     {% set messages = app.flashes %}
@@ -57,7 +56,7 @@
         <div id="countdown" class="booking-cover-property" data-start-date="{{ booking.startDate|date('d/m/Y') }}" data-checkin-time="{{ booking.property.checkIn|date('H:i') }}">
 
             <img src="{{ asset (booking.property.cover) }}" alt="Image de {{ booking.property.title }}">
-            <div id="countdownText_{{ booking.id }}" class="cd-text cd-style2"></div>
+            <div id="countdownText_{{ booking.id }}" class="cd-text cd-style"></div>
 
         </div>
 
@@ -83,10 +82,10 @@
                 </p>
 
                 {# Vérifie si la date d'adhésion de l'utilisateur est antérieure à un an avant la date actuelle #}
-                {% if now >= booking.user.createdAt|date_modify('-1 year') %}
+                {% if date("now") >= booking.user.createdAt|date_modify('-1 year') %}
                     <p><strong>With us since:</strong> {{ booking.user.createdAt|date('M Y') }}</p>
                 {% else %}
-                    {% set yearsSinceCreation = "now"|date('Y') - booking.user.createdAt|date('Y') %}
+                    {% set yearsSinceCreation = date("now")|date('Y-m-d') - booking.user.createdAtdate('Y-m-d') %}
                     <p><strong>Member for:</strong> {{ yearsSinceCreation }} {{ yearsSinceCreation == 1 ? 'year' : 'years' }}</p>
                 {% endif %}
                 
@@ -110,7 +109,7 @@
         {% set endDate = endDateStr|date('Y-m-d H:i:s') %}
 
         {# Affichage du formulaire de commentaire si le séjour est terminé #}
-        {% if now >= endDate %}
+        {% if date('now') < endDate %}
             <h3 class="tac">Your feedback matters !</h3>
             {{ form_start(formAddFeedback) }}
                 <div class="feedback-container tac">
@@ -136,14 +135,21 @@
                 </div>
                 {{ form_errors(formAddFeedback) }}
             {{ form_end(formAddFeedback) }}
+        {# Si aucune condition précédente n'est remplie #}
+        {% elseif date('now') > endDate %}
+            {# Afficher un message indiquant que un commentaire peut être laissé seulement à la fin du séjour #}
+            <div class="feedback-container">
+                <h3 class="gold-text-stroke">About the feedback !</h3>
+                <p class="feedback-info-card">We look forward to hearing about your experience! Please note that you will be able to share your feedback at the end of your stay. Your opinion is important to us! Thank you for your understanding and see you soon !</p>
+            </div>
         {# Sinon, s'il y a des commentaires pour cet hébergement, affichage des commentaires des voyageurs #}
-        {% elseif booking.property.feedback is not empty %}
+        {% elseif feedback.user == booking.user and booking.property.feedback|length > 0 %}
             <h3>Your Experience</h3>
             <div class="feedback-container">
                 {# Boucle pour récupérer les commentaires laissés par les utilisateurs ayant séjourné dans l'hébergement #}
                 {% for feedback in booking.property.feedback %}
                     {# Filtrer ceux appartenant à l'utilisateur actuel #}
-                    {% if feedback.user == booking.user %}
+                    {# {% if feedback.user == booking.user %} #}
                         <div class="feedback-card">
 
                             <div class="space-between">
@@ -180,7 +186,7 @@
                             </div>
                             
                         </div>
-                    {% endif %}
+                    {# {% endif %} #}
                 {% endfor %}
             </div>
 
@@ -192,6 +198,7 @@
             </div>
         {% endif %}
 
+    </div>
     </div>
 
 {% endblock %}

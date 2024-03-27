@@ -64,6 +64,8 @@
                                     {# Affiche un lien vers la page d'inscription #}
                                     <li><a href="{{ path('app_register') }}">SIGN UP</a></li>
                                 {% endif %}
+                                {# Lien vers la page d'accueil #}
+                                <li><a href="{{ path('app_home') }}">HOME</a></li>
                                 {# Affiche un lien pour proposer son hébergement #}
                                 <li><a href="{{ path('new_property') }}">HOST</a></li>
                                 {# Lien vers la page de contact #}
@@ -85,7 +87,7 @@
                                     {# Si l'utilisateur à au moins une réservation #}
                                     {% if app.user.bookings|length > 0 %}
                                         {# Affiche un lien "My Reservation" ou "My Reservations" selon le nombre de réservations #}
-                                        <li><a href="{{ path('app_booking') }}">{{ app.user.properties|length == 1 ? 'MY RESERVATION' : 'MY RESERVATIONS' }}</a></li>
+                                        <li><a href="{{ path('app_booking') }}">{{ app.user.bookings|length == 1 ? 'MY RESERVATION' : 'MY RESERVATIONS' }}</a></li>
                                     {% endif %}
                                     {# Si l'utilisateur a publié au moins un hébergement #}
                                     {% if app.user.properties|length > 0 %}
