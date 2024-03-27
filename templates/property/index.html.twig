@@ -1,10 +1,26 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}My properties{% endblock %}
+{% block title %}My {{app.user.properties|length == 1 ? 'Property' : 'Properties' }}{% endblock %}
 
 {% block body %}
+    <div class="first-part-property">
+        <h2 class="gold-text-stroke">My {{app.user.properties|length == 1 ? 'Property' : 'Properties' }}</h2>
+    </div>
     <div class="home-container">
         {% for property in app.user.properties %}
+            {% set past_bookings = [] %}
+            {% set current_bookings = [] %}
+            {% set upcoming_bookings = [] %}
+            {% for booking in property.bookings %}
+                {% if booking.isPast() %}
+                    {% set past_bookings = past_bookings | merge([booking]) %}
+                {% elseif booking.isCurrent() %}
+                    {% set current_bookings = current_bookings | merge([booking]) %}
+                {% elseif booking.isUpcoming() %}
+                    {% set upcoming_bookings = upcoming_bookings | merge([booking]) %}
+                {% endif %}
+            {% endfor %}
+            
             <div class="property-card">
             
                 <div class="property-card-header">
@@ -16,32 +32,30 @@
                             <a class="edit-btn" href="{{ path('edit_property', {'id': property.id}) }}"><span class="material-symbols-outlined">settings</span></a>
                             <a class="delete-btn" href="{{ path('delete_property', {'id': property.id}) }}"><span class="material-symbols-outlined">delete</span></a>
                         </div>
+                        <div class="my-property-price-sticker">
+                            <p>{{ property.price }} €</p>
+                        </div>
+                        {% if current_bookings|length > 0 %}
+                            {% for booking in current_bookings %}
+                                {% set current_guest = booking.user %}
+                                <div class="my-property-guest-sticker">
+                                    <p>Current Guest: {{ current_guest }}</p>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                        
                     {% endif %}
-                    {# <div class="property-heart">
-                        <a href=""><i class="fa-regular fa-heart"></i></a>
-                    </div> #}
                 </div>
-            
-                <div class="property-card-box">
-                    <strong class="property-card-localisation">{{ property.city }}, {{ property.country }}</strong>
-                    {% if property.user.username is not empty %}
-                        <a class="property-card-host" href="">{{ property.user.username }}</a>
-                    {% else %}
-                        <a class="property-card-host" href="">{{ property.user.email|split('@')|first }}</a>            
-                    {% endif %}
-                </div>
-            
+
                 <div class="property-card-text">
-                    <h3>{{ property.title }}</h3>
-                
-                    {# 
-                       - SPLIT le contenu de "property.content" en une liste de mots en utilisant l'espace comme délimiteur, 
-                       - SLICE sélectionne les 17 premiers mots du contenu 
-                       - JOIN rejoint les 17 mots sélectionnés en les séparant par des espaces. 
-                    #}
-                    <p>{{ property.content|split(" ")|slice(0, 15)|join(" ") }}...</p>
-                    
-                    <strong>{{ property.price }} € per day</strong>
+                    <localisation class="my-property-localisation">{{ property.city }}, {{ property.country }}</localisation>
+                    <h3 class="my-property-title">{{ property.title }}</h3>
+                    <div class="space-between">
+                        {# <a href="" class="property-card-btn">{{ property.feedback|length }}<br>Submitted {{ property.feedback|length == 1 ? 'Feedback' : 'Feedbacks' }}</a> #}
+                        <a href="" class="property-card-btn">{{ past_bookings|length }}<br>Past {{ past_bookings|length == 1 ? 'Stay' : 'Stays' }}</a>
+                        <a href="" class="property-card-btn">{{ current_bookings|length }}<br>Current {{ current_bookings|length == 1 ? 'Stay' : 'Stays' }}</a>
+                        <a href="" class="property-card-btn">{{ upcoming_bookings|length }}<br>Upcoming {{ upcoming_bookings|length == 1 ? 'Stay' : 'Stays' }}</a>
+                    </div>
                 </div>
             
             </div>

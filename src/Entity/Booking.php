@@ -32,6 +32,21 @@ class Booking
     #[ORM\ManyToOne(inversedBy: 'bookings')]
     private ?property $property = null;
 
+    public function isPast(): bool
+    {
+        return $this->endDate < new \DateTime();
+    }
+
+    public function isCurrent(): bool
+    {
+        return $this->endDate >= new \DateTime() && $this->startDate <= new \DateTime();
+    }
+
+    public function isUpcoming(): bool
+    {
+        return $this->startDate > new \DateTime();
+    }
+
     public function isBookedDates(): bool
     {
         $existingBookings = $this->bookingRepository->findByPropertyAndDates(
