@@ -1,3 +1,11 @@
+.booking-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 860px;
+}
+
 /* =================== BOOKING FORM ========================= */
 
 #calendrier {
@@ -71,6 +79,7 @@
     flex-wrap: wrap;
     justify-content: center;
     gap: 100px;
+    margin-bottom: 30px;
 }
 
 #countdownText {
@@ -87,27 +96,14 @@
 .cd-style {
     box-sizing: content-box;
     position: absolute;
-    bottom: 0;
-    left: 0;
-    transform: translateY(-360%);
     cursor: default;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.5); 
     color: #fff;
     font-size: 28px; 
     border: 1px solid #000;
-}
-.cd-style2 {
-    box-sizing: content-box;
-    position: absolute;
     top: 0;
     left: 0;
-    cursor: default;
-    text-align: center;
-    background-color: rgba(0, 0, 0, 0.5); 
-    color: #fff;
-    font-size: 28px; 
-    border: 1px solid #000;
 }
 .cd-text {
     width: 100%;
@@ -127,9 +123,9 @@
 
 .booking-cover-property img {
     width: 100%;
-    height: auto;
+    height: 100%;
     border-radius: 5px;
-    object-fit: contain;
+    object-fit: cover;
 }
 
 .booking-infos {

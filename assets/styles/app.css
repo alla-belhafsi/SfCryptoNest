@@ -19,7 +19,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-inline: 5%;
+    margin: 0 auto;
     min-height: 100vh;
 }
 
@@ -215,15 +215,15 @@ body {
 }
 
 .title {
-    font-size: 32px;
+    font-size: 47px;
     font-family: "Quicksand";
     margin-bottom: 50px;
 }
 
 .gold-text-stroke {
+    color: #AD8D29;
     -webkit-text-stroke: 1.5px #000;
     font-family: "Quicksand";
-    color: #AD8D29;
 }
 
 .link {

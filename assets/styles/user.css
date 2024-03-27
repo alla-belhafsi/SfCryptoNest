@@ -104,11 +104,13 @@
 .edit-btn {
     text-decoration: none;
     color: #000;
+    margin-bottom: -3px;
 }
 
 .delete-btn {
     text-decoration: none;
     color: #000;
+    margin-bottom: -3px;
 }
 
 .update-btn {

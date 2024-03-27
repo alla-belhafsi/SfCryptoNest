@@ -24,6 +24,20 @@
     gap: 20px;
 }
 
+.feedback-info-card {
+    display: inline-block;
+    text-align: center;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    background-color: #fff;
+    border: 1px solid #AD8D29;
+    border-radius: 5px;
+    width: 100%;
+    padding: 5px 20px 5px 20px;
+    margin: 0px 25px 0px 25px;
+    overflow: hidden;
+    cursor: default;
+}
+
 .feedback-card {
     position: relative;
     box-shadow: rgb(38, 57, 77) 0px 20px 30px -20px;
