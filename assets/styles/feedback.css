@@ -48,12 +48,11 @@
     padding: 5px 20px 15px 20px;
     overflow: hidden;
     cursor: default;
-    height: 120px; 
-    transition: height 2s; 
+    max-height: 120px;
 }
 .feedback-card:hover { 
-    border: 2px solid #AD8D29; 
-    height: fit-content;
+    border: 2px solid #AD8D29;
+    max-height: fit-content; 
 } 
 
 /* ============= COMMENT ============= */
@@ -67,14 +66,28 @@
     -webkit-line-clamp: 2; 
     -webkit-box-orient: vertical; 
     overflow: hidden;
-    text-overflow: ellipsis; /* Affiche les trois points de suspension */
+    /* Affiche les trois points de suspension */
+    text-overflow: ellipsis;
     cursor: pointer;
 }
 
 .feedback-card:hover .feedback-comment {
-    -webkit-line-clamp: unset; 
+    -webkit-line-clamp: unset;
 }
 
+/* Animation pour réduire la carte en hauteur */
+/* @keyframes reduceHeight {
+    from {
+        max-height: fit-content;
+    }
+    to {
+        max-height: 120px;
+    }
+}
+
+.reduce-height {
+    animation: reduceHeight 1s ease;
+} */
 
 /* ============== RATING ============== */
 

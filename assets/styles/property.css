@@ -64,9 +64,9 @@
     margin: auto;
 }
 
-button.prev, button.next {
+/* button.prev, button.next {
     position: absolute;
-    top: 50%;
+    top: 47%;
     background-color: rgba(37, 37, 37, 0.5);
     border: none;
     color: #fff;
@@ -76,14 +76,38 @@ button.prev, button.next {
     border-radius: 50%;
     padding: 0px 9px 3px 9px;
     transition: left 0.5s ease, right 0.5s ease;
+} */
+button.prev, button.next {
+    position: absolute;
+    top: 44%;
+    background-color: rgba(37, 37, 37, 0.5);
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 1;
+    clip-path: circle(30%);
+    transition: left 0.5s ease, right 0.5s ease;
 }
 
 button.prev {
     left: -30px;
+    padding: 7px 12px 12px 10px;
+    transition: transform 0.5s ease;
 }
 button.next {
     right: -30px;
+    padding: 7px 10px 12px 12px;
+    transition: transform 0.5s ease;
 }
+
+button.prev:hover {
+    transform: scale(1.2);
+}
+button.next:hover {
+    transform: scale(1.2);
+}
+
 .property-cover-card:hover button.prev {
     left: 10px;
 }
@@ -93,12 +117,13 @@ button.next {
 }
 
 .property-content-card {
+    cursor: default;
     text-align: justify;
+    border-radius: 10px;
+    border: 10px;
+    background-color: white;
     width: 400px; 
     height: fit-content;
-    border-radius: 10px;
-    background-color: white;
-    border: 10px;
 }
 
 .property-info-side {
@@ -110,15 +135,30 @@ button.next {
 
 .property-icons {
     display: flex;
+    align-items: start;
+    justify-content: center;
     flex-direction: column;
+    margin-block: auto;
     gap: 30px;
+}
+.property-icon-wrapper {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    clip-path: circle(74px at 50.0% 50%);
 }
 .property-icon {
     box-sizing: border-box;
-    border: 2px solid #AD8D29;
-    border-radius: 50%;
-    clip-path: circle(55%);
-    width: 75px;
+    width: 70px;
+    transition: padding 0.5s, border 0.5s;
+}
+.mini-infos {
+    text-align: center;
+    cursor: default;
+    width: 70px;
+    transition: color 0.5s;
 }
 .property-param {
     display: flex;
@@ -126,6 +166,14 @@ button.next {
     gap: 30px;
 }
 
+.property-icon:hover {
+    padding: 3px;
+    border: 1.5px solid #AD8D29;
+    border-radius: 50%;
+}
+.property-icon-wrapper:hover + .mini-infos {
+    color: #C49C5F;
+}
 
 /* ========================home/index========================= */
 
@@ -212,6 +260,7 @@ button.next {
 }
 
 .property-card-localisation {
+    cursor: default;
     font-size: 14px;
     padding: 5px 5px 2px 5px;
 }
@@ -363,6 +412,7 @@ button.next {
 .property-price-book {
     display: flex;
     justify-content: space-between;
+    cursor: default;
 }
 
 .bg-btn {
